@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Child from './layout/Child'
+import Navbar from './TheNavbar'
 import Example from './ui/Example'
 ;[
   Child,
+  Navbar,
   {
     name: 'example',
     ...Example

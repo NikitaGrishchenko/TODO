@@ -1,11 +1,17 @@
 <template>
-  <example color="#01bf9e" :show-links="true">
-    Welcome to SPA application
-  </example>
+  <div class="container">
+    <list-task />
+  </div>
 </template>
 
 <script>
+  import ListTask from '../components/ui/ListTask'
   export default {
+    components: {
+      'list-task': ListTask
+    },
+
+    layout: 'default',
     metaInfo() {
       const { appName } = window.config
 

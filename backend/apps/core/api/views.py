@@ -19,6 +19,6 @@ SchemaView = get_schema_view(
             "backgroundColor": "transparent",
         },
     ),
-    public=False,
+    public=True,
     permission_classes=(permissions.AllowAny,),
 )

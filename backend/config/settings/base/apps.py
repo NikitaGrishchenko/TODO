@@ -18,6 +18,7 @@ DEFAULT_APPS = [
     "etc",
     "drf_multiple_model",
     "rest_framework_simplejwt.token_blacklist",
+    "rest_framework.authtoken",
 ]
 
 PROJECT_APPS = [
@@ -25,6 +26,7 @@ PROJECT_APPS = [
     "apps.core.main",
     "apps.core.api",
     "apps.api.auth",
+    "apps.api.TODO",
 ]
 
 DEVELOPER_APPS = [
@@ -37,3 +39,4 @@ PRODUCTION_APPS = [
     *DEFAULT_APPS,
     *PROJECT_APPS,
 ]
+
