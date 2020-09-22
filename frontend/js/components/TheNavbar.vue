@@ -1,14 +1,15 @@
+{% load static%}
 <template>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">
-      <img
-        src="/docs/4.5/assets/brand/bootstrap-solid.svg"
+      <!-- <img
+        src="{% static 'images/logo.png' %}"
         width="30"
         height="30"
         class="d-inline-block align-top"
         alt=""
         loading="lazy"
-      />
+      /> -->
       TODO
     </a>
   </nav>

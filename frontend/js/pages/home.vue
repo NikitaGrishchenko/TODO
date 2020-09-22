@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <list-task />
-  </div>
+  <list-task />
 </template>
 
 <script>

@@ -21,10 +21,10 @@ def get_due_date():
 
 class Todo(models.Model):
     title = models.CharField(max_length=250)
-    category = models.CharField(max_length=250)
-    text = models.TextField(blank=True)
-    created_date = models.DateField(auto_now_add=True)
-    due_date = models.DateField(default=get_due_date)
+    # category = models.CharField(max_length=250)
+    # text = models.TextField(blank=True)
+    # created_date = models.DateField(auto_now_add=True)
+    # due_date = models.DateField(default=get_due_date)
     # category = models.ForeignKey(
     #     Category,
     #     blank=True,
@@ -32,7 +32,8 @@ class Todo(models.Model):
     #     on_delete=models.SET_NULL,
     #     related_name="category",
     # )
-    done = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
+    editing = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Задача"
