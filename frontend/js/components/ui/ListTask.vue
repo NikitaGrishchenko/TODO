@@ -91,7 +91,9 @@
 </template>
 
 <script>
+  import Swal from 'sweetalert2'
   import axios from 'axios'
+  // axios.defaults.baseURL = ''
 
   export default {
     metaInfo() {
@@ -105,7 +107,7 @@
     data() {
       return {
         newTodo: '',
-        idForTodo: 10,
+        idForTodo: 100,
         beforeEditCache: '',
         filter: 'all',
         todos: []
@@ -145,16 +147,42 @@
         if (this.newTodo.trim().length === 0) {
           return alert('Введите что-нибудь')
         } else {
-          this.todos.push({
-            id: this.idForTodo,
+          // eslint-disable-next-line no-unused-vars
+          const result = {
             title: this.newTodo,
             completed: false,
             editing: false
-          })
-          this.newTodo = ''
-          this.idForTodo++
+          }
+          axios
+            .post('todo/', result)
+            .then(() => {
+              this.todos.push({
+                id: this.idForTodo,
+                title: this.newTodo,
+                completed: false,
+                editing: false
+              })
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                icon: 'success',
+                title: 'Задача добавлена',
+                timer: 3000,
+                timerProgressBar: true
+              })
+              this.newTodo = ''
+              this.idForTodo++
+            })
+            .catch(() => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Ошибка'
+              })
+            })
         }
       },
+
       editTodo(todo) {
         this.beforeEditCache = todo.title
         todo.editing = true
@@ -178,9 +206,12 @@
       }
     },
     created() {
-      axios.get('todo/').then(response => {
-        this.todos = response.data
-      })
+      axios
+        .get('todo/')
+        .then(response => {
+          this.todos = response.data
+        })
+        .catch(error => console.log(error))
     }
   }
 </script>
