@@ -30,15 +30,17 @@
             >
               {{ todo.title }}
             </div>
-            <input
-              v-else
-              class="todo-item__edit"
-              type="text"
-              v-model="todo.title"
-              @blur="doneEdit(todo)"
-              @keyup.esc="cancelEdit(todo)"
-              v-focus
-            />
+            <div class="d-flex" v-else>
+              <input
+                class="todo-item__edit"
+                type="text"
+                v-model="todo.title"
+                @keyup.esc="cancelEdit(todo)"
+              />
+              <button @click="doneEdit(index)">
+                Ок
+              </button>
+            </div>
           </div>
           <div class="todo-item__remove" @click="removeTodo(index)">
             &times;
@@ -107,7 +109,7 @@
     data() {
       return {
         newTodo: '',
-        idForTodo: 100,
+        idForTodo: '',
         beforeEditCache: '',
         filter: 'all',
         todos: []
@@ -118,18 +120,14 @@
         return this.todos.filter(todo => !todo.completed).length
       },
       anyRemaining() {
-        // eslint-disable-next-line eqeqeq
-        return this.remaining == 0
+        return this.remaining === 0
       },
       todosFiltered() {
-        // eslint-disable-next-line eqeqeq
-        if (this.filter == 'all') {
+        if (this.filter === 'all') {
           return this.todos
-          // eslint-disable-next-line eqeqeq
-        } else if (this.filter == 'active') {
+        } else if (this.filter === 'active') {
           return this.todos.filter(todo => !todo.completed)
-          // eslint-disable-next-line eqeqeq
-        } else if (this.filter == 'completed') {
+        } else if (this.filter === 'completed') {
           return this.todos.filter(todo => todo.completed)
         }
         return this.todos
@@ -156,8 +154,10 @@
           axios
             .post('todo/', result)
             .then(() => {
+              const lastId = this.todos[this.todos.length - 1].id
+              const lastIdPlusOne = lastId + 1
               this.todos.push({
-                id: this.idForTodo,
+                id: lastIdPlusOne,
                 title: this.newTodo,
                 completed: false,
                 editing: false
@@ -187,12 +187,28 @@
         this.beforeEditCache = todo.title
         todo.editing = true
       },
-      doneEdit(todo) {
-        // eslint-disable-next-line eqeqeq
-        if (todo.title.trim() == '') {
-          todo.title = this.beforeEditCache
-        }
-        todo.editing = false
+      doneEdit(index) {
+        // if (todo.title.trim() === '') {
+        //   todo.title = this.beforeEditCache
+        // }
+        this.todos[index].editing = false
+        const updateData = this.todos[index]
+        axios
+          .patch('todo/' + updateData.id + '/', updateData)
+          .then(() => {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              icon: 'success',
+              title: 'Задача изменена',
+              timer: 3000,
+              timerProgressBar: true
+            })
+          })
+          .catch(error => {
+            console.log(error)
+          })
       },
       cancelEdit(todo) {
         todo.title = this.beforeEditCache
@@ -210,6 +226,7 @@
         .get('todo/')
         .then(response => {
           this.todos = response.data
+          console.log(this.todos)
         })
         .catch(error => console.log(error))
     }
