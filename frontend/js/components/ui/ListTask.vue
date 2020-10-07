@@ -10,6 +10,9 @@
           @keyup.enter="addTodo"
         />
       </div>
+      <!-- <div class="col-12 text-center">
+        <h1>Задач нет</h1>
+      </div> -->
       <div class="col-12">
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -21,6 +24,7 @@
               type="checkbox"
               v-model="todo.completed"
               class="todo-item__checkbox"
+              @change="checkTodo(index)"
             />
             <div
               v-if="!todo.editing"
@@ -109,7 +113,6 @@
     data() {
       return {
         newTodo: '',
-        idForTodo: '',
         beforeEditCache: '',
         filter: 'all',
         todos: []
@@ -181,7 +184,6 @@
             })
         }
       },
-
       editTodo(todo) {
         this.beforeEditCache = todo.title
         todo.editing = true
@@ -214,10 +216,34 @@
         todo.editing = false
       },
       removeTodo(index) {
-        this.todos.splice(index, 1)
+        const deleteData = this.todos[index]
+        axios.delete('todo/' + deleteData.id + '/', deleteData).then(() => {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            icon: 'success',
+            title: 'Задача удалена',
+            timer: 3000,
+            timerProgressBar: true
+          })
+          this.todos.splice(index, 1)
+        })
       },
       checkAllTodos() {
         this.todos.forEach(todo => (todo.completed = event.target.checked))
+      },
+      checkTodo(index) {
+        const indexData = this.todos[index]
+        const checkTodoData = {
+          completed: indexData.completed
+        }
+        axios
+          .patch('todo/' + indexData.id + '/', checkTodoData)
+          .then(() => {})
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
     created() {
@@ -225,7 +251,6 @@
         .get('todo/')
         .then(response => {
           this.todos = response.data
-          console.log(this.todos)
         })
         .catch(error => console.log(error))
     }
