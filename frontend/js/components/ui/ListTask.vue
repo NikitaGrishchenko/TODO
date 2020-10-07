@@ -153,15 +153,15 @@
           }
           axios
             .post('todo/', result)
-            .then(() => {
-              const lastId = this.todos[this.todos.length - 1].id
-              const lastIdPlusOne = lastId + 1
+            .then(response => {
+              var newArray = response.data
               this.todos.push({
-                id: lastIdPlusOne,
-                title: this.newTodo,
+                id: newArray.id,
+                title: newArray.title,
                 completed: false,
                 editing: false
               })
+              console.log(newArray)
               Swal.fire({
                 toast: true,
                 position: 'top-end',
@@ -172,7 +172,6 @@
                 timerProgressBar: true
               })
               this.newTodo = ''
-              this.idForTodo++
             })
             .catch(() => {
               Swal.fire({
