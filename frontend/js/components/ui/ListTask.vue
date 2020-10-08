@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 d-flex align-items-center">
         <input
           type="text"
           class="todo-input"
@@ -9,6 +9,9 @@
           v-model="newTodo"
           @keyup.enter="addTodo"
         />
+        <button @click="addTodo">
+          Ок
+        </button>
       </div>
     </div>
     <div v-if="this.todos && this.todos.length > 0" class="row">
