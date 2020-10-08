@@ -10,9 +10,8 @@
           @keyup.enter="addTodo"
         />
       </div>
-      <!-- <div class="col-12 text-center">
-        <h1>Задач нет</h1>
-      </div> -->
+    </div>
+    <div v-if="this.todos && this.todos.length > 0" class="row">
       <div class="col-12">
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -91,6 +90,11 @@
             Завершённые
           </button>
         </div>
+      </div>
+    </div>
+    <div v-else class="row">
+      <div class="col-12 text-center mt-5">
+        <h1>Задач нет</h1>
       </div>
     </div>
   </div>
