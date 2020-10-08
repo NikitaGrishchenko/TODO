@@ -137,7 +137,13 @@
     methods: {
       addTodo() {
         if (this.newTodo.trim().length === 0) {
-          return alert('Введите что-нибудь')
+          return Swal.fire({
+            showConfirmButton: false,
+            icon: 'error',
+            title: 'Текст напиши',
+            timer: 1500,
+            timerProgressBar: true
+          })
         } else {
           // eslint-disable-next-line no-unused-vars
           const result = {
@@ -149,7 +155,7 @@
             .post('todo/', result)
             .then(response => {
               var newArray = response.data
-              this.todos.push({
+              this.todos.unshift({
                 id: newArray.id,
                 title: newArray.title,
                 completed: false,
@@ -238,7 +244,8 @@
       axios
         .get('todo/')
         .then(response => {
-          this.todos = response.data
+          this.todos = response.data.reverse()
+          console.log(this.todos)
         })
         .catch(error => console.log(error))
     }
