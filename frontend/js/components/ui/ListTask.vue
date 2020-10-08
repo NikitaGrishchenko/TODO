@@ -12,6 +12,34 @@
       </div>
     </div>
     <div v-if="this.todos && this.todos.length > 0" class="row">
+      <div class="col-12 mb-2">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex">
+            <button
+              class="btn btn-primary"
+              :class="{ active: filter == 'all' }"
+              @click="filter = 'all'"
+            >
+              Все
+            </button>
+            <button
+              class="btn btn-primary mx-2"
+              :class="{ active: filter == 'active' }"
+              @click="filter = 'active'"
+            >
+              Активные
+            </button>
+            <button
+              class="btn btn-primary"
+              :class="{ active: filter == 'completed' }"
+              @click="filter = 'completed'"
+            >
+              Завершённые
+            </button>
+          </div>
+          <div>{{ remaining }} задачи осталось</div>
+        </div>
+      </div>
       <div class="col-12">
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -50,50 +78,9 @@
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                :checked="anyRemaining"
-                @change="checkAllTodos"
-              />
-              Выбрать всё
-            </label>
-          </div>
-          <div>{{ remaining }} задачи осталось</div>
-        </div>
-      </div>
-      <div class="col-12">
-        <hr />
-        <div class="d-flex">
-          <button
-            class="btn btn-primary"
-            :class="{ active: filter == 'all' }"
-            @click="filter = 'all'"
-          >
-            Все
-          </button>
-          <button
-            class="btn btn-primary mx-2"
-            :class="{ active: filter == 'active' }"
-            @click="filter = 'active'"
-          >
-            Активные
-          </button>
-          <button
-            class="btn btn-primary"
-            :class="{ active: filter == 'completed' }"
-            @click="filter = 'completed'"
-          >
-            Завершённые
-          </button>
-        </div>
-      </div>
     </div>
     <div v-else class="row">
-      <div class="col-12 text-center mt-5">
+      <div class="col-12 text-center mt-3">
         <h1>Задач нет</h1>
       </div>
     </div>
@@ -233,9 +220,6 @@
           })
           this.todos.splice(index, 1)
         })
-      },
-      checkAllTodos() {
-        this.todos.forEach(todo => (todo.completed = event.target.checked))
       },
       checkTodo(index) {
         const indexData = this.todos[index]
