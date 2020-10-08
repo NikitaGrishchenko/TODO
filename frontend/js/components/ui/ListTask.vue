@@ -118,7 +118,11 @@
       },
       todosFiltered() {
         if (this.filter === 'all') {
-          return this.todos
+          const initialArray = this.todos
+          const sortedTodos = initialArray.sort(function(a, b) {
+            return a.completed - b.completed
+          })
+          return sortedTodos
         } else if (this.filter === 'active') {
           return this.todos.filter(todo => !todo.completed)
         } else if (this.filter === 'completed') {
