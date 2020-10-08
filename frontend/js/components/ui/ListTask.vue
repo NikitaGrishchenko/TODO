@@ -138,10 +138,12 @@
       addTodo() {
         if (this.newTodo.trim().length === 0) {
           return Swal.fire({
+            toast: true,
+            position: 'top-end',
             showConfirmButton: false,
-            icon: 'error',
-            title: 'Текст напиши',
-            timer: 1500,
+            icon: 'warning',
+            title: 'Ты походу что-то забыл',
+            timer: 1800,
             timerProgressBar: true
           })
         } else {
@@ -161,7 +163,6 @@
                 completed: false,
                 editing: false
               })
-              console.log(newArray)
               Swal.fire({
                 toast: true,
                 position: 'top-end',
@@ -191,22 +192,34 @@
         // }
         this.todos[index].editing = false
         const updateData = this.todos[index]
-        axios
-          .patch('todo/' + updateData.id + '/', updateData)
-          .then(() => {
-            Swal.fire({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              icon: 'success',
-              title: 'Задача изменена',
-              timer: 3000,
-              timerProgressBar: true
+        if (updateData.title !== this.beforeEditCache) {
+          axios
+            .patch('todo/' + updateData.id + '/', updateData)
+            .then(() => {
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                icon: 'success',
+                title: 'Задача изменена',
+                timer: 3000,
+                timerProgressBar: true
+              })
             })
+            .catch(error => {
+              console.log(error)
+            })
+        } else {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            icon: 'question',
+            title: 'И ШО? Буквы платные?',
+            timer: 3000,
+            timerProgressBar: true
           })
-          .catch(error => {
-            console.log(error)
-          })
+        }
       },
       cancelEdit(todo) {
         todo.title = this.beforeEditCache
@@ -219,7 +232,7 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            icon: 'success',
+            icon: 'warning',
             title: 'Задача удалена',
             timer: 3000,
             timerProgressBar: true
