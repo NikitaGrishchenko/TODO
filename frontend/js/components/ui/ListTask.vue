@@ -125,9 +125,6 @@
         }
         return title
       },
-      anyRemaining() {
-        return this.remaining === 0
-      },
       todosFiltered() {
         if (this.filter === 'all') {
           const initialArray = this.todos
