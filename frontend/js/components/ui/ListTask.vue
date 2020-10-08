@@ -73,7 +73,7 @@
               </button>
             </div>
           </div>
-          <div class="todo-item__remove" @click="removeTodo(index)">
+          <div class="todo-item__remove" @click.once="removeTodo(index)">
             &times;
           </div>
         </div>
