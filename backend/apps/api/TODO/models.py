@@ -1,7 +1,7 @@
 from datetime import timedelta
 from django.db import models
 from django.utils import timezone
-
+from datetime import datetime
 
 # class Category(models.Model):
 #     name = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ def get_due_date():
 
 
 class Todo(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.CharField(blank=True, max_length=250)
     # category = models.CharField(max_length=250)
     # text = models.TextField(blank=True)
     # created_date = models.DateField(auto_now_add=True)
@@ -33,6 +33,7 @@ class Todo(models.Model):
     #     related_name="category",
     # )
     completed = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, blank=True)
     editing = models.BooleanField(default=False)
 
     class Meta:

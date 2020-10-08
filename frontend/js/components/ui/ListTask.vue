@@ -10,6 +10,36 @@
           @keyup.enter="addTodo"
         />
       </div>
+    </div>
+    <div v-if="this.todos && this.todos.length > 0" class="row">
+      <div class="col-12 mb-2">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex">
+            <button
+              class="btn btn-primary"
+              :class="{ active: filter == 'all' }"
+              @click="filter = 'all'"
+            >
+              Все
+            </button>
+            <button
+              class="btn btn-primary mx-2"
+              :class="{ active: filter == 'active' }"
+              @click="filter = 'active'"
+            >
+              Активные
+            </button>
+            <button
+              class="btn btn-primary"
+              :class="{ active: filter == 'completed' }"
+              @click="filter = 'completed'"
+            >
+              Завершённые
+            </button>
+          </div>
+          <div>{{ remaining }} задачи осталось</div>
+        </div>
+      </div>
       <div class="col-12">
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -21,6 +51,7 @@
               type="checkbox"
               v-model="todo.completed"
               class="todo-item__checkbox"
+              @change="checkTodo(index)"
             />
             <div
               v-if="!todo.editing"
@@ -30,61 +61,27 @@
             >
               {{ todo.title }}
             </div>
-            <input
-              v-else
-              class="todo-item__edit"
-              type="text"
-              v-model="todo.title"
-              @blur="doneEdit(todo)"
-              @keyup.esc="cancelEdit(todo)"
-              v-focus
-            />
+            <div class="d-flex" v-else>
+              <input
+                class="todo-item__edit"
+                type="text"
+                v-model="todo.title"
+                @keyup.esc="cancelEdit(todo)"
+              />
+              <button @click="doneEdit(index)">
+                Ок
+              </button>
+            </div>
           </div>
           <div class="todo-item__remove" @click="removeTodo(index)">
             &times;
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                :checked="anyRemaining"
-                @change="checkAllTodos"
-              />
-              Выбрать всё
-            </label>
-          </div>
-          <div>{{ remaining }} задачи осталось</div>
-        </div>
-      </div>
-      <div class="col-12">
-        <hr />
-        <div class="d-flex">
-          <button
-            class="btn btn-primary"
-            :class="{ active: filter == 'all' }"
-            @click="filter = 'all'"
-          >
-            Все
-          </button>
-          <button
-            class="btn btn-primary mx-2"
-            :class="{ active: filter == 'active' }"
-            @click="filter = 'active'"
-          >
-            Активные
-          </button>
-          <button
-            class="btn btn-primary"
-            :class="{ active: filter == 'completed' }"
-            @click="filter = 'completed'"
-          >
-            Завершённые
-          </button>
-        </div>
+    </div>
+    <div v-else class="row">
+      <div class="col-12 text-center mt-3">
+        <h1>Задач нет</h1>
       </div>
     </div>
   </div>
@@ -107,7 +104,6 @@
     data() {
       return {
         newTodo: '',
-        idForTodo: 100,
         beforeEditCache: '',
         filter: 'all',
         todos: []
@@ -118,18 +114,14 @@
         return this.todos.filter(todo => !todo.completed).length
       },
       anyRemaining() {
-        // eslint-disable-next-line eqeqeq
-        return this.remaining == 0
+        return this.remaining === 0
       },
       todosFiltered() {
-        // eslint-disable-next-line eqeqeq
-        if (this.filter == 'all') {
+        if (this.filter === 'all') {
           return this.todos
-          // eslint-disable-next-line eqeqeq
-        } else if (this.filter == 'active') {
+        } else if (this.filter === 'active') {
           return this.todos.filter(todo => !todo.completed)
-          // eslint-disable-next-line eqeqeq
-        } else if (this.filter == 'completed') {
+        } else if (this.filter === 'completed') {
           return this.todos.filter(todo => todo.completed)
         }
         return this.todos
@@ -145,7 +137,15 @@
     methods: {
       addTodo() {
         if (this.newTodo.trim().length === 0) {
-          return alert('Введите что-нибудь')
+          return Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            icon: 'warning',
+            title: 'Ты походу что-то забыл',
+            timer: 1800,
+            timerProgressBar: true
+          })
         } else {
           // eslint-disable-next-line no-unused-vars
           const result = {
@@ -155,10 +155,11 @@
           }
           axios
             .post('todo/', result)
-            .then(() => {
-              this.todos.push({
-                id: this.idForTodo,
-                title: this.newTodo,
+            .then(response => {
+              var newArray = response.data
+              this.todos.unshift({
+                id: newArray.id,
+                title: newArray.title,
                 completed: false,
                 editing: false
               })
@@ -172,7 +173,6 @@
                 timerProgressBar: true
               })
               this.newTodo = ''
-              this.idForTodo++
             })
             .catch(() => {
               Swal.fire({
@@ -182,34 +182,83 @@
             })
         }
       },
-
       editTodo(todo) {
         this.beforeEditCache = todo.title
         todo.editing = true
       },
-      doneEdit(todo) {
-        // eslint-disable-next-line eqeqeq
-        if (todo.title.trim() == '') {
-          todo.title = this.beforeEditCache
+      doneEdit(index) {
+        // if (todo.title.trim() === '') {
+        //   todo.title = this.beforeEditCache
+        // }
+        this.todos[index].editing = false
+        const updateData = this.todos[index]
+        if (updateData.title !== this.beforeEditCache) {
+          axios
+            .patch('todo/' + updateData.id + '/', updateData)
+            .then(() => {
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                icon: 'success',
+                title: 'Задача изменена',
+                timer: 3000,
+                timerProgressBar: true
+              })
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        } else {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            icon: 'question',
+            title: 'И ШО? Буквы платные?',
+            timer: 3000,
+            timerProgressBar: true
+          })
         }
-        todo.editing = false
       },
       cancelEdit(todo) {
         todo.title = this.beforeEditCache
         todo.editing = false
       },
       removeTodo(index) {
-        this.todos.splice(index, 1)
+        const deleteData = this.todos[index]
+        axios.delete('todo/' + deleteData.id + '/', deleteData).then(() => {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            icon: 'warning',
+            title: 'Задача удалена',
+            timer: 3000,
+            timerProgressBar: true
+          })
+          this.todos.splice(index, 1)
+        })
       },
-      checkAllTodos() {
-        this.todos.forEach(todo => (todo.completed = event.target.checked))
+      checkTodo(index) {
+        const indexData = this.todos[index]
+        const checkTodoData = {
+          completed: indexData.completed
+        }
+        axios
+          .patch('todo/' + indexData.id + '/', checkTodoData)
+          .then(() => {})
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
     created() {
       axios
         .get('todo/')
         .then(response => {
-          this.todos = response.data
+          this.todos = response.data.reverse()
+          console.log(this.todos)
         })
         .catch(error => console.log(error))
     }
