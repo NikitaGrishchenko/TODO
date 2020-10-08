@@ -37,7 +37,7 @@
               Завершённые
             </button>
           </div>
-          <div>{{ remaining }} задачи осталось</div>
+          <div>{{ remaining }} {{ remainingTitle }}</div>
         </div>
       </div>
       <div class="col-12">
@@ -113,12 +113,25 @@
       remaining() {
         return this.todos.filter(todo => !todo.completed).length
       },
+      // правописание словосочетания 'задач осталось'
+      remainingTitle() {
+        var title = ''
+        if (this.remaining === 1) {
+          title = 'задача осталась'
+        } else if (this.remaining >= 2 && this.remaining <= 4) {
+          title = 'задачи осталось'
+        } else {
+          title = 'задач осталось'
+        }
+        return title
+      },
       anyRemaining() {
         return this.remaining === 0
       },
       todosFiltered() {
         if (this.filter === 'all') {
           const initialArray = this.todos
+          // выполнененные задачи опусаются вниз списка
           const sortedTodos = initialArray.sort(function(a, b) {
             return a.completed - b.completed
           })
