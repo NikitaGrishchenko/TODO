@@ -51,8 +51,8 @@
         </div>
       </div>
       <transition-group
-        enter-active-class="animated fadeInUp"
-        leave-active-class="animated fadeOutDown"
+        enter-active-class="animated fadeInLeft"
+        leave-active-class="animated fadeOutRight"
         class="col-6 offset-3"
       >
         <div
@@ -325,7 +325,7 @@
       margin: 14px 0px
       border-radius: 3px
       font-size: 18px
-      animation-duration: 0.15s
+      animation-duration: 0.3s
       &__remove
         cursor: pointer
         user-select: none
