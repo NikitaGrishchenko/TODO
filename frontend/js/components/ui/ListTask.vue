@@ -50,7 +50,11 @@
           <div>{{ remaining }} {{ remainingTitle }}</div>
         </div>
       </div>
-      <div class="col-12">
+      <transition-group
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutDown"
+        class="col-12"
+      >
         <div
           class="todo-item d-flex justify-content-between align-items-center"
           v-for="(todo, index) in todosFiltered"
@@ -93,7 +97,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
       <div class="col-12 text-center mt-3">
@@ -291,7 +295,7 @@
           setTimeout(() => {
             this.todos = response.data.reverse()
             console.log(this.todos)
-          }, 500)
+          }, 750)
         })
         .catch(error => console.log(error))
     }
@@ -299,6 +303,8 @@
 </script>
 
 <style lang="sass" scoped>
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.compat.css")
+
   div
     color: #333
   .todo
@@ -315,6 +321,7 @@
       margin: 14px 0px
       border-radius: 3px
       font-size: 18px
+      animation-duration: 0.3s
       &__remove
         cursor: pointer
         user-select: none
