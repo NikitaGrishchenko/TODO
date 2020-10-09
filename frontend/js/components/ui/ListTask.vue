@@ -19,7 +19,7 @@
         <h1>Загрузка, ждите...</h1>
       </div>
     </div>
-    <div v-else class="row">
+    <div v-if="todos && todos.length > 0" class="row">
       <div class="col-12 mb-2">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex">
@@ -93,12 +93,11 @@
         </div>
       </div>
     </div>
-
-    <!-- <div v-if="todos.length == 0" class="row">
+    <div v-if="todos && todos.length === 0" class="row">
       <div class="col-12 text-center mt-3">
         <h1>Задач нету</h1>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -122,7 +121,7 @@
         newTodo: '',
         beforeEditCache: '',
         filter: 'all',
-        todos: []
+        todos: null
       }
     },
     computed: {
@@ -287,8 +286,10 @@
       axios
         .get('todo/')
         .then(response => {
-          this.todos = response.data.reverse()
-          console.log(this.todos)
+          setTimeout(() => {
+            this.todos = response.data.reverse()
+            console.log(this.todos)
+          }, 1000)
         })
         .catch(error => console.log(error))
     }
