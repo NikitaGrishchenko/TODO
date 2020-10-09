@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12 d-flex align-items-center">
+      <div class="col-6 offset-3 d-flex align-items-center">
         <input
           type="text"
           class="todo-input"
@@ -15,14 +15,14 @@
       </div>
     </div>
     <div v-if="!todos" class="row">
-      <div class="col-12 text-center mt-3">
+      <div class="col-6 offset-3 text-center mt-3">
         <div class="preloader">
           <div class="loader07"></div>
         </div>
       </div>
     </div>
     <div v-if="todos && todos.length > 0" class="row">
-      <div class="col-12 mb-2">
+      <div class="col-6 offset-3 mb-2">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex">
             <button
@@ -53,7 +53,7 @@
       <transition-group
         enter-active-class="animated fadeInUp"
         leave-active-class="animated fadeOutDown"
-        class="col-12"
+        class="col-6 offset-3"
       >
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -100,7 +100,7 @@
       </transition-group>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
-      <div class="col-12 text-center mt-3">
+      <div class="col-6 offset-3 text-center mt-3">
         <h1>Задач нету</h1>
       </div>
     </div>
@@ -179,7 +179,8 @@
             icon: 'warning',
             title: 'Ты походу что-то забыл',
             timer: 1800,
-            timerProgressBar: true
+            timerProgressBar: true,
+            background: '#333333'
           })
         } else {
           // eslint-disable-next-line no-unused-vars
@@ -206,7 +207,8 @@
                 icon: 'success',
                 title: 'Задача добавлена',
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
+                background: '#333333'
               })
             })
             .catch(() => {
@@ -238,7 +240,8 @@
                 icon: 'success',
                 title: 'Задача изменена',
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
+                background: '#333333'
               })
             })
             .catch(error => {
@@ -252,7 +255,8 @@
             icon: 'question',
             title: 'И ШО? Буквы платные?',
             timer: 3000,
-            timerProgressBar: true
+            timerProgressBar: true,
+            background: '#333333'
           })
         }
       },
@@ -271,7 +275,8 @@
             icon: 'warning',
             title: 'Задача удалена',
             timer: 3000,
-            timerProgressBar: true
+            timerProgressBar: true,
+            background: '#333333'
           })
         })
       },
@@ -316,12 +321,11 @@
       &:focus
         outline: 0
     &-item
-      border: 1px solid #333
       padding: 17px 23px
       margin: 14px 0px
       border-radius: 3px
       font-size: 18px
-      animation-duration: 0.3s
+      animation-duration: 0.15s
       &__remove
         cursor: pointer
         user-select: none
