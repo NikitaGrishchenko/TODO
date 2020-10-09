@@ -14,7 +14,12 @@
         </button>
       </div>
     </div>
-    <div v-if="this.todos && this.todos.length > 0" class="row">
+    <div v-if="!todos" class="row">
+      <div class="col-12 text-center mt-3">
+        <h1>Загрузка, ждите...</h1>
+      </div>
+    </div>
+    <div v-else class="row">
       <div class="col-12 mb-2">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex">
@@ -76,17 +81,24 @@
               </button>
             </div>
           </div>
-          <div class="todo-item__remove" @click.once="removeTodo(index)">
-            &times;
+          <div :class="{ clickRemove: clickRemove === todo.id }">
+            <div
+              class="todo-item__remove"
+              @click="removeTodo(index)"
+              @click.prevent="clickRemove = todo.id"
+            >
+              &times;
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-else class="row">
+
+    <!-- <div v-if="todos.length == 0" class="row">
       <div class="col-12 text-center mt-3">
-        <h1>Задач нет</h1>
+        <h1>Задач нету</h1>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -106,6 +118,7 @@
     },
     data() {
       return {
+        clickRemove: undefined,
         newTodo: '',
         beforeEditCache: '',
         filter: 'all',
@@ -170,6 +183,7 @@
             completed: false,
             editing: false
           }
+          this.newTodo = ''
           axios
             .post('todo/', result)
             .then(response => {
@@ -189,7 +203,6 @@
                 timer: 3000,
                 timerProgressBar: true
               })
-              this.newTodo = ''
             })
             .catch(() => {
               Swal.fire({
@@ -244,6 +257,7 @@
       },
       removeTodo(index) {
         const deleteData = this.todos[index]
+        this.todos.splice(index, 1)
         axios.delete('todo/' + deleteData.id + '/', deleteData).then(() => {
           Swal.fire({
             toast: true,
@@ -254,7 +268,6 @@
             timer: 3000,
             timerProgressBar: true
           })
-          this.todos.splice(index, 1)
         })
       },
       checkTodo(index) {
@@ -301,6 +314,7 @@
       font-size: 18px
       &__remove
         cursor: pointer
+        user-select: none
         &:hover
           color: #000
       &__edit
@@ -316,4 +330,6 @@
   .completed
     text-decoration: line-through
     color: grey
+  .clickRemove
+    visibility: hidden
 </style>
