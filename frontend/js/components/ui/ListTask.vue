@@ -16,7 +16,9 @@
     </div>
     <div v-if="!todos" class="row">
       <div class="col-12 text-center mt-3">
-        <h1>Загрузка, ждите...</h1>
+        <div class="preloader">
+          <div class="loader07"></div>
+        </div>
       </div>
     </div>
     <div v-if="todos && todos.length > 0" class="row">
@@ -289,7 +291,7 @@
           setTimeout(() => {
             this.todos = response.data.reverse()
             console.log(this.todos)
-          }, 1000)
+          }, 500)
         })
         .catch(error => console.log(error))
     }
