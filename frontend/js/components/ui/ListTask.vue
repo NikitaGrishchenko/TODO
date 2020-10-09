@@ -54,6 +54,7 @@
         enter-active-class="animated fadeInLeft"
         leave-active-class="animated fadeOutRight"
         class="col-6 offset-3"
+        tag="div"
       >
         <div
           class="todo-item d-flex justify-content-between align-items-center"
@@ -69,7 +70,6 @@
             />
             <div
               v-if="!todo.editing"
-              @dblclick="editTodo(todo)"
               class="todo-item__title"
               :class="{ completed: todo.completed }"
             >
@@ -87,13 +87,18 @@
               </button>
             </div>
           </div>
-          <div :class="{ clickRemove: clickRemove === todo.id }">
-            <div
-              class="todo-item__remove"
-              @click="removeTodo(index)"
-              @click.prevent="clickRemove = todo.id"
-            >
-              &times;
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="todo-item__change" @click="editTodo(todo)">
+              &#9998;
+            </div>
+            <div :class="{ clickRemove: clickRemove === todo.id }">
+              <div
+                class="todo-item__remove"
+                @click="removeTodo(index)"
+                @click.prevent="clickRemove = todo.id"
+              >
+                &times;
+              </div>
             </div>
           </div>
         </div>
@@ -321,12 +326,16 @@
       &:focus
         outline: 0
     &-item
-      padding: 17px 23px
+      padding: 17px 0px
       margin: 14px 0px
       border-radius: 3px
       font-size: 18px
       animation-duration: 0.3s
       &__remove
+        cursor: pointer
+        user-select: none
+        margin-left: 9px
+      &__change
         cursor: pointer
         user-select: none
         &:hover
