@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-6 offset-3 d-flex align-items-center">
+      <div class="col-6 offset-3 text-center my-2 mt-3">
+        <div class="todo-logo">
+          TODO87
+        </div>
+      </div>
+      <div class="col-6 offset-3">
         <input
           type="text"
           class="todo-input"
@@ -9,7 +14,7 @@
           v-model="newTodo"
           @keyup.enter="addTodo"
         />
-        <button @click="addTodo">
+        <button class="d-none" @click="addTodo">
           Ок
         </button>
       </div>
@@ -22,32 +27,35 @@
       </div>
     </div>
     <div v-if="todos && todos.length > 0" class="row">
+      <!-- <div class="col-6 offset-3 text-right mb-3">
+        <div>{{ remaining }} {{ remainingTitle }}</div>
+      </div> -->
       <div class="col-6 offset-3 mb-2">
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="d-flex">
-            <button
-              class="btn btn-primary"
-              :class="{ active: filter == 'all' }"
-              @click="filter = 'all'"
-            >
-              Все
-            </button>
-            <button
-              class="btn btn-primary mx-2"
-              :class="{ active: filter == 'active' }"
-              @click="filter = 'active'"
-            >
-              Активные
-            </button>
-            <button
-              class="btn btn-primary"
-              :class="{ active: filter == 'completed' }"
-              @click="filter = 'completed'"
-            >
-              Завершённые
-            </button>
-          </div>
-          <div>{{ remaining }} {{ remainingTitle }}</div>
+        <div class="todo-box-btn">
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'all' }"
+            @click="filter = 'all'"
+          >
+            Все
+          </button>
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'active' }"
+            @click="filter = 'active'"
+          >
+            Активные
+          </button>
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'completed' }"
+            @click="filter = 'completed'"
+          >
+            Завершённые
+          </button>
         </div>
       </div>
       <transition-group
@@ -106,7 +114,7 @@
     </div>
     <div v-if="todos && todos.length === 0" class="row">
       <div class="col-6 offset-3 text-center mt-3">
-        <h1>Задач нету</h1>
+        <h3>Активных задач нет</h3>
       </div>
     </div>
   </div>
@@ -326,11 +334,14 @@
       &:focus
         outline: 0
     &-item
-      padding: 17px 0px
-      margin: 14px 0px
-      border-radius: 3px
+      padding-bottom: 22px
+      margin: 22px 0px
       font-size: 18px
       animation-duration: 0.3s
+      border-bottom: 1px solid #b3b3b3
+      &__title
+        padding-left: 10px
+        padding-right: 7px
       &__remove
         cursor: pointer
         user-select: none
@@ -350,9 +361,27 @@
           outline: none
       &__checkbox
         margin-right: 7px
+    &-box-btn
+      &__item
+        background: #007bff
+        width: calc(100%/3)
+        height: 60px
+        border: 1px solid #007bff
+        color: #ffffff
+    &-logo
+      font-size: 25px
+      margin-top: 10px
   .completed
     text-decoration: line-through
     color: grey
   .clickRemove
     visibility: hidden
+  .btn
+    border-radius: 0px !important
+    height: 50px
+  .active
+    border: 1px solid #007bff
+    color: #007bff
+    background: transparent
+    font-weight: bold
 </style>
