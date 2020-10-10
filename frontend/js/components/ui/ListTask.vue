@@ -62,7 +62,7 @@
       <transition-group
         enter-active-class="animated fadeInLeft"
         leave-active-class="animated fadeOutRight"
-        class="col-6 offset-3"
+        class="todo-wrapper col-6 offset-3"
         tag="div"
       >
         <div
@@ -114,6 +114,18 @@
       </transition-group>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
+      <div class="col-6 offset-3">
+        <input
+          type="text"
+          class="todo-input"
+          placeholder="Что надо сделать?"
+          v-model="newTodo"
+          @keyup.enter="addTodo"
+        />
+        <button class="d-none" @click="addTodo">
+          Ок
+        </button>
+      </div>
       <div class="col-6 offset-3 text-center mt-3">
         <h3>Активных задач нет</h3>
       </div>
@@ -327,11 +339,14 @@
   div
     color: #333
   .todo
+    &-wrapper
     &-input
       width: 100%
       padding: 10px 18px
       margin: 20px 0px
       font-size: 18px
+      border-radius: 3px
+      border: 1px solid #c1c1c1
       &:focus
         outline: 0
     &-item
@@ -369,9 +384,10 @@
         background: #007bff
         width: calc(100%/3)
         height: 60px
-        border: 3px solid #007bff
+        border: 1px solid #fff
         color: #ffffff
         font-weight: bold
+        border-radius: 3px
     &-logo
       margin-top: 10px
       &__img
@@ -385,7 +401,7 @@
     border-radius: 0px !important
     height: 50px
   .active
-    border: 3px solid #007bff
+    border: 2px solid #007bff
     color: #007bff
     background: transparent
     font-weight: bold
