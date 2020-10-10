@@ -1,22 +1,11 @@
+{% load static%}
 <template>
   <div class="container">
     <div class="row">
       <div class="col-6 offset-3 text-center my-2 mt-3">
         <div class="todo-logo">
-          TODO87
+          <img class="todo-logo__img" src="/static/images/logo.png" alt="" />
         </div>
-      </div>
-      <div class="col-6 offset-3">
-        <input
-          type="text"
-          class="todo-input"
-          placeholder="Что надо сделать?"
-          v-model="newTodo"
-          @keyup.enter="addTodo"
-        />
-        <button class="d-none" @click="addTodo">
-          Ок
-        </button>
       </div>
     </div>
     <div v-if="!todos" class="row">
@@ -30,6 +19,18 @@
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
       </div> -->
+      <div class="col-6 offset-3">
+        <input
+          type="text"
+          class="todo-input"
+          placeholder="Что надо сделать?"
+          v-model="newTodo"
+          @keyup.enter="addTodo"
+        />
+        <button class="d-none" @click="addTodo">
+          Ок
+        </button>
+      </div>
       <div class="col-6 offset-3 mb-2">
         <div class="todo-box-btn">
           <button
@@ -346,9 +347,11 @@
         cursor: pointer
         user-select: none
         margin-left: 9px
+        color: #FF2D2D
       &__change
         cursor: pointer
         user-select: none
+        color: #333
         &:hover
           color: #000
       &__edit
@@ -366,11 +369,13 @@
         background: #007bff
         width: calc(100%/3)
         height: 60px
-        border: 1px solid #007bff
+        border: 3px solid #007bff
         color: #ffffff
+        font-weight: bold
     &-logo
-      font-size: 25px
       margin-top: 10px
+      &__img
+        user-select: none
   .completed
     text-decoration: line-through
     color: grey
@@ -380,7 +385,7 @@
     border-radius: 0px !important
     height: 50px
   .active
-    border: 1px solid #007bff
+    border: 3px solid #007bff
     color: #007bff
     background: transparent
     font-weight: bold
