@@ -15,10 +15,7 @@
         </div>
       </div>
     </div>
-    <div v-if="todos && todos.length > 0" class="row">
-      <!-- <div class="col-6 offset-3 text-right mb-3">
-        <div>{{ remaining }} {{ remainingTitle }}</div>
-      </div> -->
+    <div v-if="todos" class="row">
       <div class="col-6 offset-3">
         <input
           type="text"
@@ -31,6 +28,13 @@
           Ок
         </button>
       </div>
+    </div>
+    <div v-if="todos && todos.length === 0" class="row">
+      <div class="col-6 offset-3 text-center mt-3">
+        <h3>Активных задач нет</h3>
+      </div>
+    </div>
+    <div v-if="todos && todos.length > 0" class="row">
       <div class="col-6 offset-3 mb-2">
         <div class="todo-box-btn">
           <button
@@ -59,6 +63,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <div v-if="todos" class="row">
+      <!-- <div class="col-6 offset-3 text-right mb-3">
+        <div>{{ remaining }} {{ remainingTitle }}</div>
+      </div> -->
       <transition-group
         enter-active-class="animated fadeInLeft"
         leave-active-class="animated fadeOutRight"
@@ -112,23 +121,6 @@
           </div>
         </div>
       </transition-group>
-    </div>
-    <div v-if="todos && todos.length === 0" class="row">
-      <div class="col-6 offset-3">
-        <input
-          type="text"
-          class="todo-input"
-          placeholder="Что надо сделать?"
-          v-model="newTodo"
-          @keyup.enter="addTodo"
-        />
-        <button class="d-none" @click="addTodo">
-          Ок
-        </button>
-      </div>
-      <div class="col-6 offset-3 text-center mt-3">
-        <h3>Активных задач нет</h3>
-      </div>
     </div>
   </div>
 </template>
@@ -186,13 +178,6 @@
           return this.todos.filter(todo => todo.completed)
         }
         return this.todos
-      }
-    },
-    directives: {
-      focus: {
-        inserted: function(el) {
-          el.focus()
-        }
       }
     },
     methods: {
@@ -275,12 +260,11 @@
             })
         } else {
           Swal.fire({
-            toast: true,
-            position: 'top-end',
+            position: 'center',
             showConfirmButton: false,
             icon: 'question',
             title: 'И ШО? Буквы платные?',
-            timer: 3000,
+            timer: 1000,
             timerProgressBar: true,
             background: '#333333'
           })
