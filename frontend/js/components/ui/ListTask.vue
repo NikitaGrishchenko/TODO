@@ -184,14 +184,12 @@
       addTodo() {
         if (this.newTodo.trim().length === 0) {
           return Swal.fire({
-            toast: true,
-            position: 'top-end',
+            position: 'center',
             showConfirmButton: false,
             icon: 'warning',
-            title: 'Ты походу что-то забыл',
-            timer: 1800,
-            timerProgressBar: true,
-            background: '#333333'
+            title: 'Введите текст',
+            timer: 1000,
+            timerProgressBar: true
           })
         } else {
           // eslint-disable-next-line no-unused-vars
@@ -211,16 +209,16 @@
                 completed: false,
                 editing: false
               })
-              Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                icon: 'success',
-                title: 'Задача добавлена',
-                timer: 3000,
-                timerProgressBar: true,
-                background: '#333333'
-              })
+              // Swal.fire({
+              //   toast: true,
+              //   position: 'top-end',
+              //   showConfirmButton: false,
+              //   icon: 'success',
+              //   title: 'Задача добавлена',
+              //   timer: 3000,
+              //   timerProgressBar: true,
+              //   background: '#333333'
+              // })
             })
             .catch(() => {
               Swal.fire({
@@ -243,31 +241,10 @@
         if (updateData.title !== this.beforeEditCache) {
           axios
             .patch('todo/' + updateData.id + '/', updateData)
-            .then(() => {
-              Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                icon: 'success',
-                title: 'Задача изменена',
-                timer: 3000,
-                timerProgressBar: true,
-                background: '#333333'
-              })
-            })
+            .then(() => {})
             .catch(error => {
               console.log(error)
             })
-        } else {
-          Swal.fire({
-            position: 'center',
-            showConfirmButton: false,
-            icon: 'question',
-            title: 'И ШО? Буквы платные?',
-            timer: 1000,
-            timerProgressBar: true,
-            background: '#333333'
-          })
         }
       },
       cancelEdit(todo) {
@@ -277,18 +254,7 @@
       removeTodo(index) {
         const deleteData = this.todos[index]
         this.todos.splice(index, 1)
-        axios.delete('todo/' + deleteData.id + '/', deleteData).then(() => {
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            icon: 'warning',
-            title: 'Задача удалена',
-            timer: 3000,
-            timerProgressBar: true,
-            background: '#333333'
-          })
-        })
+        axios.delete('todo/' + deleteData.id + '/', deleteData).then(() => {})
       },
       checkTodo(index) {
         const indexData = this.todos[index]
