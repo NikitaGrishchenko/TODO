@@ -1,12 +1,12 @@
 <template>
-  <list-task />
+  <todo-list></todo-list>
 </template>
 
 <script>
-  import ListTask from '../components/ui/ListTask'
+  import TodoList from '../components/todo/TodoList'
   export default {
     components: {
-      'list-task': ListTask
+      'todo-list': TodoList
     },
 
     layout: 'default',

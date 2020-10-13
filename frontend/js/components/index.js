@@ -9,6 +9,7 @@ import Example from './ui/Example'
     name: 'example',
     ...Example
   }
+
   // if not component name
   // { name: 'component-name', ...Component }
 ].forEach(Component => {
