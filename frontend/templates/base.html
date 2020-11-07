@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{% block title %}{% trans "Site name" %}{% endblock title %}</title>
-  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+  {% comment %} <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" /> {% endcomment %}
   {% render_bundle 'chunk-vendors' 'css' %}
   {% render_bundle 'app' 'css' %}
   {% block head %}{% endblock head %}

@@ -1,6 +1,6 @@
 {% load static%}
 <template>
-  <div class="container">
+  <div class="container todo-container">
     <div class="row">
       <div class="col-6 offset-3 text-center my-2 mt-3">
         <div class="todo-logo">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
-      <div class="col-6 offset-3 text-center mt-3">
+      <div class="col-6 offset-3 text-center mt-3 none-active">
         <h3>Активных задач нет</h3>
       </div>
     </div>
@@ -285,29 +285,37 @@
 
 <style lang="sass" scoped>
   @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.compat.css")
-
   div
     color: #333
   .todo
+    &-container
     &-wrapper
     &-input
       width: 100%
-      padding: 10px 18px
-      margin: 20px 0px
+      padding: 15px 25px
+      margin: 30px 0px
       font-size: 18px
-      border-radius: 3px
-      border: 1px solid #c1c1c1
+      border-radius: 73px
+      background: #333333
+      box-shadow: inset 8px 8px 16px #292929, inset -8px -8px 16px #3d3d3d
+      border: none
+      outline: none
       &:focus
         outline: 0
     &-item
-      padding-bottom: 22px
-      margin: 22px 0px
       font-size: 18px
       animation-duration: 0.3s
-      border-bottom: 1px solid #b3b3b3
+      padding: 10px 20px
+      margin: 15px 0px
+      border-radius: 73px
+      background: #333333
+      box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+      border: none
+      outline: none
       &__title
         padding-left: 10px
         padding-right: 7px
+        color: #ffffff
       &__remove
         cursor: pointer
         user-select: none
@@ -316,7 +324,7 @@
       &__change
         cursor: pointer
         user-select: none
-        color: #333
+        color: #fff
         &:hover
           color: #000
       &__edit
@@ -330,14 +338,18 @@
       &__checkbox
         margin-right: 7px
     &-box-btn
+      display: flex
       &__item
-        background: #007bff
-        width: calc(100%/3)
+        display: inline-block
+        margin-right: 10px
+        padding: 8px 20px
+        border-radius: 73px
+        background: #333333
+        box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+        border: none
+        outline: none
+        color: #c5c5c5
         height: 60px
-        border: 1px solid #fff
-        color: #ffffff
-        font-weight: bold
-        border-radius: 3px
     &-logo
       margin-top: 10px
       &__img
@@ -349,10 +361,11 @@
     visibility: hidden
   .btn
     border-radius: 0px !important
-    height: 50px
   .active
-    border: 2px solid #007bff
-    color: #007bff
-    background: transparent
-    font-weight: bold
+    border-radius: 73px
+    background: #333333
+    box-shadow: inset 5px 5px 10px #2b2b2b,inset -5px -5px 10px #3b3b3b
+    color: #e0e0e0
+  .none-active
+    color: #ffffff
 </style>
