@@ -1,32 +1,39 @@
 # Including commands
 run-django-server:
-	poetry run task server localhost:8000
+	python ./backend/manage.py runserver
 
 run-webpack-server:
 	yarn serve
 
 open-localhost:
-	poetry run python -m webbrowser "http://localhost:8000"
+	python -m webbrowser "http://localhost:8000"
 
-.PHONY: clear
-clear:
-	poetry run task clear
+# .PHONY: clear
+# clear:
+# 	poetry run task clear
+.PHONY: venv-linux
+venv-linux:
+	python3 -m venv .venv
+	source .venv/bin/activate;
+
+.PHONY: venv-win
+venv-win:
+	touch .venv\Scripts\activate
 
 .PHONY: createadmin
 createadmin:
-	poetry run task createsuperuser
+	python ./backend/manage.py createsuperuser
 
 .PHONY: migrate
 migrate:
-	poetry run task migrate
+	python ./backend/manage.py migrate
 
 
 # Primary commands
 .PHONY: install
 install:
-	poetry install --no-root
+	pip install -r requirements.txt
 	yarn
-	poetry run task initconfig --debug
 	@make migrate
 
 .PHONY: install-prod

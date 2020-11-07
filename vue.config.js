@@ -1,96 +1,64 @@
-const path = require('path')
-const isProd = process.env.NODE_ENV === 'production'
-const webpack = require('webpack')
-const BundleTracker = require('webpack-bundle-tracker')
+const path = require("path");
+const BundleTracker = require("webpack-bundle-tracker");
 
 // Config
 function initConfig() {
-  const frontendDir = path.join(__dirname, 'frontend')
-  const staticDir = path.join(frontendDir, 'static')
-  const templatesDir = path.join(frontendDir, 'templates')
+  const frontendDir = path.join(__dirname, "frontend");
+  const staticDir = path.join(frontendDir, "static");
+  const templatesDir = path.join(frontendDir, "templates");
   return {
     staticDir: staticDir,
     templatesDir: templatesDir,
-    jsDir: path.join(frontendDir, 'js'),
-    distDir: path.join(staticDir, 'dist'),
-    sassDir: path.join(frontendDir, 'sass'),
-    webpackStatsDir: path.join('frontend', 'static', 'dist'),
-    globalStyles: ['style/abstracts']
-  }
+    jsDir: path.join(frontendDir, "js"),
+    distDir: path.join(staticDir, "dist"),
+    sassDir: path.join(frontendDir, "sass"),
+    webpackStatsDir: path.join("frontend", "static", "dist"),
+    globalStyles: []
+  };
 }
 
-const settings = initConfig()
-
-function loadGlobalStyles() {
-  return settings.globalStyles.map((path) => `@import "${path}"`).join('\n')
-}
+const settings = initConfig();
 
 module.exports = {
-  publicPath: isProd ? '/static/dist' : 'http://localhost:8080/dist',
+  runtimeCompiler: true,
+  publicPath: "http://127.0.0.1:8080/dist",
   outputDir: settings.distDir,
-  css: {
-    loaderOptions: {
-      sass: {
-        prependData: loadGlobalStyles()
-      }
-    }
-  },
-  chainWebpack: (config) => {
-    config.entry('app').clear().add('./frontend/js/app.js').end()
-    config.module
-      .rule('js')
-      .exclude.add(/iconfont\.js$/)
-      .end()
-    config.module
-      .rule('font-icons')
-      .test(/iconfont\.js$/)
-      .use('css-extract')
-      .loader(
-        process.env.NODE_ENV === 'development'
-          ? 'vue-style-loader'
-          : require('mini-css-extract-plugin').loader
-      )
-      .end()
-      .use('css-loader')
-      .loader('css-loader')
-      .end()
-      .use('webfonts-loader')
-      .loader('webfonts-loader')
-      .end()
-    config.plugins.delete('html')
-    config.plugins.delete('preload')
-    config.plugins.delete('prefetch')
-    config.plugins.delete('copy')
-    config.resolve.alias
-      .set('@', settings.jsDir)
-      .set('style', settings.sassDir)
-      .set('vue$', 'vue/dist/vue.esm.js')
+
+  chainWebpack: config => {
+    config
+      .entry("app")
+      .clear()
+      .add("./frontend/js/main.js")
+      .end();
+    config
+      .plugin("BundleTracker")
+      .use(BundleTracker, [
+        { path: settings.webpackStatsDir, filename: "webpack-stats.json" }
+      ]);
+
+    config.output.filename("bundle.js");
+
+    config.optimization.splitChunks(false);
+
+    config.resolve.alias.set("__STATIC__", "static");
+
     config.devServer
-      .public('http://localhost:8080')
-      .host('localhost')
+      // the first 3 lines of the following code have been added to the configuration
+      .public("http://127.0.0.1:8080")
+      .host("127.0.0.1")
       .port(8080)
       .hotOnly(true)
       .watchOptions({ poll: 1000 })
       .https(false)
-      .contentBase(settings.templatesDir)
-      .watchContentBase(true)
-      .headers({ 'Access-Control-Allow-Origin': ['*'] })
-  },
-  configureWebpack: (config) => {
-    config.plugins.push(
-      new BundleTracker({
-        path: settings.webpackStatsDir,
-        filename: 'webpack-stats.json'
-      })
-    )
-    config.plugins.push(
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'windows.$': 'jquery',
-        'windows.jQuery': 'jquery',
-        'windows.JQuery': 'jquery'
-      })
-    )
+      .disableHostCheck(true)
+      .headers({ "Access-Control-Allow-Origin": ["*"] });
   }
-}
+
+  // uncomment before executing 'npm run build'
+  // css: {
+  //     extract: {
+  //       filename: 'bundle.css',
+  //       chunkFilename: 'bundle.css',
+  //     },
+  // }
+};
