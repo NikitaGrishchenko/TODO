@@ -295,21 +295,23 @@
       margin: 30px 0px
       font-size: 18px
       border-radius: 73px
-      background: #333333
-      box-shadow: inset 8px 8px 16px #292929, inset -8px -8px 16px #3d3d3d
-      border: none
+      background: transparent
+      border: 0.5px solid #fff
+      color: #fff
       outline: none
       &:focus
         outline: 0
+      &::placeholder
+        color: #cecece
     &-item
       font-size: 18px
       animation-duration: 0.3s
-      padding: 10px 20px
+      padding: 20px 20px
       margin: 15px 0px
-      border-radius: 73px
-      background: #333333
-      box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+      border-radius: 0px
+      background: transparent
       border: none
+      border-bottom: 1px solid #fff
       outline: none
       &__title
         padding-left: 10px
@@ -341,30 +343,28 @@
       &__item
         display: inline-block
         margin-right: 10px
-        padding: 8px 20px
-        border-radius: 73px
-        background: #333333
-        box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+        padding: 10px 20px
+        border-radius: 1.5px
+        background: transparent
         border: none
+        border-bottom: 3.5px solid transparent
         outline: none
-        color: #c5c5c5
-        height: 60px
+        color: #fff
     &-logo
       margin-top: 10px
       &__img
         user-select: none
   .completed
     text-decoration: line-through
-    color: grey
+    color: #dedede
   .clickRemove
     visibility: hidden
   .btn
     border-radius: 0px !important
   .active
-    border-radius: 73px
-    background: #333333
-    box-shadow: inset 5px 5px 10px #2b2b2b,inset -5px -5px 10px #3b3b3b
-    color: #e0e0e0
+    background: transparent
+    color: #fff
+    border-bottom: 3.5px solid #fff
   .none-active
     color: #ffffff
 </style>
