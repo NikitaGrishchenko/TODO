@@ -19,7 +19,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 cryptography==3.2.1
 cssselect2==0.3.0
-dataclasses==0.7
+dataclasses==0.6
 defusedxml==0.6.0
 diff-match-patch==20181111
 distlib==0.3.0
@@ -68,7 +68,6 @@ pathspec==0.8.0
 pexpect==4.8.0
 Pillow==7.1.2
 pipenv==2018.11.26
-pkg-resources==0.0.0
 pkginfo==1.5.0.1
 poetry==1.0.4
 ptyprocess==0.6.0

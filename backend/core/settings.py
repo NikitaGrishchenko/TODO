@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "webpack_loader",
     "rest_framework",
     "apps.todo",
-    "apps.auth",
+    "apps.user_auth",
 ]
 
 MIDDLEWARE = [
@@ -145,7 +145,8 @@ STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
 
 # Auth
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
 
 
 REST_FRAMEWORK = {

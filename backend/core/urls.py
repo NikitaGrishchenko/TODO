@@ -22,6 +22,8 @@ urlpatterns = [
     path("dj-admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("api/v1/todo/", include("apps.todo.v1.urls")),
+    path("auth/", include("django.contrib.auth.urls")),
+    path("auth/", include("apps.user_auth.urls")),
     path(
         "",
         TemplateView.as_view(template_name="index.html"),
