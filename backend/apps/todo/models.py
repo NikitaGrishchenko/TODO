@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 def get_due_date():
@@ -13,6 +14,7 @@ class Todo(models.Model):
     completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, blank=True)
     editing = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Задача"

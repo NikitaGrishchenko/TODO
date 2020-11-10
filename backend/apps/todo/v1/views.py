@@ -14,7 +14,11 @@ class TodoListView(generics.ListCreateAPIView):
     # authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = TodoListSerializer
-    queryset = Todo.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Todo.objects.filter(user_id=user.pk)
+        return queryset
 
     # @login_required
     # def my_view(request):

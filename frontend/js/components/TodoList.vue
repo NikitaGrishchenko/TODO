@@ -145,6 +145,7 @@
         beforeEditCache: '',
         filter: 'all',
         todos: null
+        // user_id: localStorage
       }
     },
     computed: {
@@ -195,8 +196,10 @@
           const result = {
             title: this.newTodo,
             completed: false,
-            editing: false
+            editing: false,
+            user: 1
           }
+          console.log(this.user_id)
           this.newTodo = ''
           axios
             .post('todo/', result)
