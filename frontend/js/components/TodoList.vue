@@ -128,7 +128,6 @@
 <script>
   import Swal from 'sweetalert2'
   import axios from 'axios'
-  // axios.defaults.baseURL = ''
   export default {
     name: 'todo-list',
     props: { userId: Number },
@@ -199,7 +198,6 @@
             editing: false,
             user: this.userId
           }
-          console.log(this.userId)
           this.newTodo = ''
           axios
             .post('todo/', result)

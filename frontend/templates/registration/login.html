@@ -1,10 +1,47 @@
 {% extends  'base.html' %}
+{% load  static %}
 
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+
+<div class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4">
+        <div class="login-box">
+          <div class="row">
+            <div class="col-12">
+              <img src="{% static 'img/logo.png' %}" alt="" class="login-img">
+            </div>
+            <div class="col-12">
+              <div class="login-forms">
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="form-box">
+                    {{ form.username }}
+                  </div>
+                  <div class="form-box">
+                    {{ form.password }}
+                  </div>
+                  <button class="button" type="submit">Войти</button>
+                </form>
+              </div>
+            </div>
+            <div class="col-12">
+              <a href="#">Забыли пароль?</a>
+            </div>
+            <div class="col-12">
+              <div class="login-footer">
+                <p class="login-footer__text">Нет аккаунта?</p>
+                <a href="{% url 'signup' %}">Зарегистрируйтесь</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock content %}
