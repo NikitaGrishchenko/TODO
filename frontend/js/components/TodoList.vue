@@ -131,6 +131,7 @@
   // axios.defaults.baseURL = ''
   export default {
     name: 'todo-list',
+    props: { userId: Number },
     metaInfo() {
       const { appName } = window.config
       return {
@@ -145,7 +146,6 @@
         beforeEditCache: '',
         filter: 'all',
         todos: null
-        // user_id: localStorage
       }
     },
     computed: {
@@ -197,9 +197,9 @@
             title: this.newTodo,
             completed: false,
             editing: false,
-            user: 1
+            user: this.userId
           }
-          console.log(this.user_id)
+          console.log(this.userId)
           this.newTodo = ''
           axios
             .post('todo/', result)
@@ -277,7 +277,7 @@
         .then(response => {
           setTimeout(() => {
             this.todos = response.data.reverse()
-            console.log(this.todos)
+            console.log(response.data)
           }, 750)
         })
         .catch(error => console.log(error))
