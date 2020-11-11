@@ -16,9 +16,8 @@ class TodoListView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
     queryset = Todo.objects.all()
 
-    # @login_required
-    # def my_view(request):
-    #     pass
+    def get_queryset(self):
+        return super().get_queryset().filter(user__id=self.request.user.id)
 
 
 class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
