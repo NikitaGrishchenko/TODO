@@ -107,7 +107,11 @@
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <div class="todo-item__change" @click="editTodo(todo)">
-              &#9998;
+              <img
+                src="static/img/pencil.png"
+                alt="pencil"
+                class="todo-item__pencil"
+              />
             </div>
             <div :class="{ clickRemove: clickRemove === todo.id }">
               <div
@@ -115,7 +119,11 @@
                 @click="removeTodo(index)"
                 @click.prevent="clickRemove = todo.id"
               >
-                &times;
+                <img
+                  src="static/img/times.png"
+                  alt="times"
+                  class="todo-item__times"
+                />
               </div>
             </div>
           </div>
@@ -291,21 +299,7 @@
     &-container
     &-wrapper
     &-input
-      width: 100%
-      // background: url(././static/img/plus-input.png) no-repeat scroll 7px 7px
-      padding: 15px 15px 15px 0px
-      margin: 30px 0px
-      font-size: 18px
-      border-radius: 0px
-      background: transparent
-      border: none
-      border-bottom: 0.5px solid #fff
-      color: #fff
-      outline: none
-      &:focus
-        outline: 0
-      &::placeholder
-        color: #fff
+      background: url(../../static/img/plus-input.png) no-repeat 3px 11px
     &-item
       font-size: 18px
       animation-duration: 0.3s
@@ -342,16 +336,18 @@
         margin-right: 7px
     &-box-btn
       display: flex
+      justify-content: flex-end
       &__item
         display: inline-block
-        margin-right: 10px
-        padding: 10px 20px
-        border-radius: 1.5px
+        margin-left: 10px
+        padding: 8px 15px
+        border-radius: 15px
         background: transparent
         border: none
-        border-bottom: 3.5px solid transparent
+        border: 1px solid #7B7D8A
         outline: none
-        color: #fff
+        color: #7B7D8A
+        margin-bottom: 7px
     &-logo
       margin-top: 10px
       &__img
@@ -366,7 +362,7 @@
   .active
     background: transparent
     color: #fff
-    border-bottom: 3.5px solid #fff
+    border: 1px solid #fff
   .none-active
     color: #ffffff
 </style>
