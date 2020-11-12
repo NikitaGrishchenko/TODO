@@ -337,6 +337,7 @@
     &-box-btn
       display: flex
       justify-content: flex-end
+      margin-top: 10px
       &__item
         display: inline-block
         margin-left: 10px
@@ -347,14 +348,14 @@
         border: 1px solid #7B7D8A
         outline: none
         color: #7B7D8A
-        margin-bottom: 7px
     &-logo
-      margin-top: 10px
+      margin-top: 30px
+      margin-bottom: 10px
       &__img
         user-select: none
   .completed
     text-decoration: line-through
-    color: #dedede
+    color: #7b7d8a
   .clickRemove
     visibility: hidden
   .btn

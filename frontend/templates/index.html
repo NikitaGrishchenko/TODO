@@ -9,9 +9,6 @@
   {% if user.is_authenticated %}
       <sidebar user-name="{{user.username}}"></sidebar>
       <todo-list :user-id="{{user.id}}"></todo-list>
-    {% else %}
-      <p>You are not logged in.</p>
-      <a href="{% url 'login' %}">Log In</a>
   {% endif %}
 
 

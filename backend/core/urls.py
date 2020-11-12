@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from django.conf.urls import include
+from .views import HomeView
+
 
 urlpatterns = [
     path("dj-admin/", admin.site.urls),
@@ -26,7 +28,7 @@ urlpatterns = [
     path("auth/", include("apps.user_auth.urls")),
     path(
         "",
-        TemplateView.as_view(template_name="index.html"),
+        HomeView.as_view(template_name="index.html"),
         name="home",
     ),
 ]
