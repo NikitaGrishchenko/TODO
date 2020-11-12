@@ -292,27 +292,28 @@
     &-wrapper
     &-input
       width: 100%
-      padding: 15px 25px
+      // background: url(././static/img/plus-input.png) no-repeat scroll 7px 7px
+      padding: 15px 15px 15px 0px
       margin: 30px 0px
       font-size: 18px
-      border-radius: 73px
+      border-radius: 0px
       background: transparent
-      border: 0.5px solid #fff
+      border: none
+      border-bottom: 0.5px solid #fff
       color: #fff
       outline: none
       &:focus
         outline: 0
       &::placeholder
-        color: #cecece
+        color: #fff
     &-item
       font-size: 18px
       animation-duration: 0.3s
       padding: 20px 20px
-      margin: 15px 0px
-      border-radius: 0px
-      background: transparent
+      margin: 10px 0px
+      border-radius: 20px
+      background: #0F121B
       border: none
-      border-bottom: 1px solid #fff
       outline: none
       &__title
         padding-left: 10px
