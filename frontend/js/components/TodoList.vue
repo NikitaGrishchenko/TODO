@@ -305,7 +305,7 @@
       animation-duration: 0.3s
       padding: 20px 20px
       margin: 10px 0px
-      border-radius: 20px
+      border-radius: 15px
       background: #0F121B
       border: none
       outline: none

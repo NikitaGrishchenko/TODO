@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.todo",
     "apps.user_auth",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [

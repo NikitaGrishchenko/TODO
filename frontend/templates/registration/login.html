@@ -1,5 +1,6 @@
 {% extends  'base.html' %}
-{% load  static %}
+{% load  static  %}
+{% load  widget_tweaks %}
 
 {% block content %}
 
@@ -9,7 +10,7 @@
       <div class="col-lg-4 offset-lg-4">
         <div class="login-box">
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 mb-3">
               <img src="{% static 'img/logo.png' %}" alt="" class="login-img">
             </div>
             <div class="col-12">
@@ -17,22 +18,27 @@
                 <form method="post">
                   {% csrf_token %}
                   <div class="form-box">
-                    {{ form.username }}
+                    {% render_field form.username class="login-input login-input--username" placeholder="Имя пользователя" %}
                   </div>
                   <div class="form-box">
-                    {{ form.password }}
+                    {% render_field form.password class="login-input login-input--password" placeholder="Пароль" %}
                   </div>
-                  <button class="button" type="submit">Войти</button>
+                  <button class="login-btn" type="submit">Войти</button>
                 </form>
               </div>
             </div>
             <div class="col-12">
-              <a href="#">Забыли пароль?</a>
+              {% if form.errors %}
+                <div class="login-error d-flex align-items-center">
+                  <p class="login-error__text">Вы неверно ввели имя пользователя или пароль</p>
+                </div>
+              {% endif %}
             </div>
             <div class="col-12">
-              <div class="login-footer">
-                <p class="login-footer__text">Нет аккаунта?</p>
-                <a href="{% url 'signup' %}">Зарегистрируйтесь</a>
+              <div class="login-footer d-flex justify-content-center align-items-center">
+                <a class="login-footer__link" href="{% url 'signup' %}">Регистрация</a>
+                <span class="login-footer__span">  </span>
+                <a class="login-footer__restore" href="#">Забыли пароль?</a>
               </div>
             </div>
           </div>
@@ -41,7 +47,4 @@
     </div>
   </div>
 </div>
-
-
-
 {% endblock content %}
