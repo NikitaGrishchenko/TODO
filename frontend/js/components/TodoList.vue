@@ -107,7 +107,11 @@
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <div class="todo-item__change" @click="editTodo(todo)">
-              &#9998;
+              <img
+                src="static/img/pencil.png"
+                alt="pencil"
+                class="todo-item__pencil"
+              />
             </div>
             <div :class="{ clickRemove: clickRemove === todo.id }">
               <div
@@ -115,7 +119,11 @@
                 @click="removeTodo(index)"
                 @click.prevent="clickRemove = todo.id"
               >
-                &times;
+                <img
+                  src="static/img/times.png"
+                  alt="times"
+                  class="todo-item__times"
+                />
               </div>
             </div>
           </div>
@@ -128,9 +136,9 @@
 <script>
   import Swal from 'sweetalert2'
   import axios from 'axios'
-  // axios.defaults.baseURL = ''
   export default {
     name: 'todo-list',
+    props: { userId: Number },
     metaInfo() {
       const { appName } = window.config
       return {
@@ -195,7 +203,8 @@
           const result = {
             title: this.newTodo,
             completed: false,
-            editing: false
+            editing: false,
+            user: this.userId
           }
           this.newTodo = ''
           axios
@@ -274,7 +283,7 @@
         .then(response => {
           setTimeout(() => {
             this.todos = response.data.reverse()
-            console.log(this.todos)
+            console.log(response.data)
           }, 750)
         })
         .catch(error => console.log(error))
@@ -290,25 +299,14 @@
     &-container
     &-wrapper
     &-input
-      width: 100%
-      padding: 15px 25px
-      margin: 30px 0px
-      font-size: 18px
-      border-radius: 73px
-      background: #333333
-      box-shadow: inset 8px 8px 16px #292929, inset -8px -8px 16px #3d3d3d
-      border: none
-      outline: none
-      &:focus
-        outline: 0
+      background: url(../../static/img/plus-input.png) no-repeat 3px 11px
     &-item
       font-size: 18px
       animation-duration: 0.3s
-      padding: 10px 20px
-      margin: 15px 0px
-      border-radius: 73px
-      background: #333333
-      box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+      padding: 20px 20px
+      margin: 10px 0px
+      border-radius: 15px
+      background: #0F121B
       border: none
       outline: none
       &__title
@@ -338,33 +336,34 @@
         margin-right: 7px
     &-box-btn
       display: flex
+      justify-content: flex-end
+      margin-top: 10px
       &__item
         display: inline-block
-        margin-right: 10px
-        padding: 8px 20px
-        border-radius: 73px
-        background: #333333
-        box-shadow:  5px 5px 10px #232323, -5px -5px 10px #434343
+        margin-left: 10px
+        padding: 8px 15px
+        border-radius: 15px
+        background: transparent
         border: none
+        border: 1px solid #7B7D8A
         outline: none
-        color: #c5c5c5
-        height: 60px
+        color: #7B7D8A
     &-logo
-      margin-top: 10px
+      margin-top: 30px
+      margin-bottom: 10px
       &__img
         user-select: none
   .completed
     text-decoration: line-through
-    color: grey
+    color: #7b7d8a
   .clickRemove
     visibility: hidden
   .btn
     border-radius: 0px !important
   .active
-    border-radius: 73px
-    background: #333333
-    box-shadow: inset 5px 5px 10px #2b2b2b,inset -5px -5px 10px #3b3b3b
-    color: #e0e0e0
+    background: transparent
+    color: #fff
+    border: 1px solid #fff
   .none-active
     color: #ffffff
 </style>

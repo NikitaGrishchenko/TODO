@@ -8,6 +8,9 @@ run-webpack-server:
 open-localhost:
 	python -m webbrowser "http://localhost:8000"
 
+activate-venv-win:
+	touch .venv/bin/activate.bat
+
 # .PHONY: clear
 # clear:
 # 	poetry run task clear
@@ -18,7 +21,7 @@ venv-linux:
 
 .PHONY: venv-win
 venv-win:
-	touch .venv\Scripts\activate
+	@make activate-venv-win
 
 .PHONY: createadmin
 createadmin:

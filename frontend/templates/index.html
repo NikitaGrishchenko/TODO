@@ -5,7 +5,12 @@
 {% block content%}
 
 
-<todo-list></todo-list>
+
+  {% if user.is_authenticated %}
+      <sidebar user-name="{{user.username}}"></sidebar>
+      <todo-list :user-id="{{user.id}}"></todo-list>
+  {% endif %}
+
 
 
 {% endblock content %}

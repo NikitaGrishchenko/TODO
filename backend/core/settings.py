@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "webpack_loader",
     "rest_framework",
     "apps.todo",
+    "apps.user_auth",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
@@ -142,11 +144,17 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
 
-# REST API
+# Auth
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
+
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+    ),
 }
