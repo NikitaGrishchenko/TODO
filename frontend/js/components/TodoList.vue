@@ -8,13 +8,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!todos" class="row">
-      <div class="col-6 offset-3 text-center mt-3">
-        <div class="preloader">
-          <div class="loader07"></div>
-        </div>
-      </div>
-    </div>
+    <preloader v-if="!todos"></preloader>
     <div v-if="todos" class="row">
       <div class="col-6 offset-3">
         <input
@@ -24,9 +18,6 @@
           v-model="newTodo"
           @keyup.enter="addTodo"
         />
-        <button class="d-none" @click="addTodo">
-          Ок
-        </button>
       </div>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
