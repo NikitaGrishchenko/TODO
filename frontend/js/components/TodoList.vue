@@ -55,6 +55,7 @@
         </div>
       </div>
     </div>
+    <filter-task v-if="todos && todos.length > 0"></filter-task>
     <div v-if="todos" class="row">
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
@@ -127,7 +128,10 @@
 <script>
   import Swal from 'sweetalert2'
   import axios from 'axios'
+  import FilterTask from './FilterTask.vue'
+  import Preloader from './Preloader'
   export default {
+    components: { FilterTask, Preloader },
     name: 'todo-list',
     props: { userId: Number },
     metaInfo() {
@@ -142,41 +146,41 @@
         clickRemove: undefined,
         newTodo: '',
         beforeEditCache: '',
-        filter: 'all',
         todos: null
       }
     },
     computed: {
-      remaining() {
-        return this.todos.filter(todo => !todo.completed).length
-      },
+      // счетчик количества выполненных задач
+      // remaining() {
+      //   return this.todos.filter(todo => !todo.completed).length
+      // },
       // правописание словосочетания 'задач осталось'
-      remainingTitle() {
-        var title = ''
-        if (this.remaining === 1) {
-          title = 'задача осталась'
-        } else if (this.remaining >= 2 && this.remaining <= 4) {
-          title = 'задачи осталось'
-        } else {
-          title = 'задач осталось'
-        }
-        return title
-      },
-      todosFiltered() {
-        if (this.filter === 'all') {
-          const initialArray = this.todos
-          // выполнененные задачи опусаются вниз списка
-          const sortedTodos = initialArray.sort(function(a, b) {
-            return a.completed - b.completed
-          })
-          return sortedTodos
-        } else if (this.filter === 'active') {
-          return this.todos.filter(todo => !todo.completed)
-        } else if (this.filter === 'completed') {
-          return this.todos.filter(todo => todo.completed)
-        }
-        return this.todos
-      }
+      // remainingTitle() {
+      //   var title = ''
+      //   if (this.remaining === 1) {
+      //     title = 'задача осталась'
+      //   } else if (this.remaining >= 2 && this.remaining <= 4) {
+      //     title = 'задачи осталось'
+      //   } else {
+      //     title = 'задач осталось'
+      //   }
+      //   return title
+      // },
+      // todosFiltered() {
+      //   if (this.filter === 'all') {
+      //     const initialArray = this.todos
+      //     // выполнененные задачи опусаются вниз списка
+      //     const sortedTodos = initialArray.sort(function(a, b) {
+      //       return a.completed - b.completed
+      //     })
+      //     return sortedTodos
+      //   } else if (this.filter === 'active') {
+      //     return this.todos.filter(todo => !todo.completed)
+      //   } else if (this.filter === 'completed') {
+      //     return this.todos.filter(todo => todo.completed)
+      //   }
+      //   return this.todos
+      // }
     },
     methods: {
       addTodo() {
