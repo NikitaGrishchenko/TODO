@@ -34,6 +34,7 @@
 <script>
   export default {
     name: 'filter-task',
+    props: { todos: Array },
     data() {
       return {
         filter: 'all'
@@ -43,6 +44,7 @@
       todosFiltered() {
         if (this.filter === 'all') {
           const initialArray = this.todos
+          console.log(' xzdfd ' + initialArray)
           // выполнененные задачи опусаются вниз списка
           const sortedTodos = initialArray.sort(function(a, b) {
             return a.completed - b.completed

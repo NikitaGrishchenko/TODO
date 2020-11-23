@@ -25,7 +25,7 @@
         <h3>Активных задач нет</h3>
       </div>
     </div>
-    <div v-if="todos && todos.length > 0" class="row">
+    <!-- <div v-if="todos && todos.length > 0" class="row">
       <div class="col-6 offset-3 mb-2">
         <div class="todo-box-btn">
           <button
@@ -54,8 +54,11 @@
           </button>
         </div>
       </div>
-    </div>
-    <filter-task v-if="todos && todos.length > 0"></filter-task>
+    </div> -->
+    <filter-task
+      v-if="todos && todos.length > 0"
+      :todos="this.todos"
+    ></filter-task>
     <div v-if="todos" class="row">
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
@@ -278,7 +281,7 @@
         .then(response => {
           setTimeout(() => {
             this.todos = response.data.reverse()
-            console.log(response.data)
+            // console.log(response.data)
           }, 750)
         })
         .catch(error => console.log(error))
