@@ -25,7 +25,7 @@
         <h3>Активных задач нет</h3>
       </div>
     </div>
-    <!-- <div v-if="todos && todos.length > 0" class="row">
+    <div v-if="todos && todos.length > 0" class="row">
       <div class="col-6 offset-3 mb-2">
         <div class="todo-box-btn">
           <button
@@ -54,7 +54,7 @@
           </button>
         </div>
       </div>
-    </div> -->
+    </div>
     <filter-task
       v-if="todos && todos.length > 0"
       :todos="this.todos"
@@ -131,10 +131,9 @@
 <script>
   import Swal from 'sweetalert2'
   import axios from 'axios'
-  import FilterTask from './FilterTask.vue'
   import Preloader from './Preloader'
   export default {
-    components: { FilterTask, Preloader },
+    components: { Preloader },
     name: 'todo-list',
     props: { userId: Number },
     metaInfo() {
@@ -149,7 +148,8 @@
         clickRemove: undefined,
         newTodo: '',
         beforeEditCache: '',
-        todos: null
+        todos: null,
+        filter: 'all'
       }
     },
     computed: {
@@ -169,21 +169,21 @@
       //   }
       //   return title
       // },
-      // todosFiltered() {
-      //   if (this.filter === 'all') {
-      //     const initialArray = this.todos
-      //     // выполнененные задачи опусаются вниз списка
-      //     const sortedTodos = initialArray.sort(function(a, b) {
-      //       return a.completed - b.completed
-      //     })
-      //     return sortedTodos
-      //   } else if (this.filter === 'active') {
-      //     return this.todos.filter(todo => !todo.completed)
-      //   } else if (this.filter === 'completed') {
-      //     return this.todos.filter(todo => todo.completed)
-      //   }
-      //   return this.todos
-      // }
+      todosFiltered() {
+        if (this.filter === 'all') {
+          const initialArray = this.todos
+          // выполнененные задачи опусаются вниз списка
+          const sortedTodos = initialArray.sort(function(a, b) {
+            return a.completed - b.completed
+          })
+          return sortedTodos
+        } else if (this.filter === 'active') {
+          return this.todos.filter(todo => !todo.completed)
+        } else if (this.filter === 'completed') {
+          return this.todos.filter(todo => todo.completed)
+        }
+        return this.todos
+      }
     },
     methods: {
       addTodo() {
