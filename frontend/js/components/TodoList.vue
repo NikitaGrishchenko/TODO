@@ -8,13 +8,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!todos" class="row">
-      <div class="col-6 offset-3 text-center mt-3">
-        <div class="preloader">
-          <div class="loader07"></div>
-        </div>
-      </div>
-    </div>
+    <preloader v-if="!todos"></preloader>
     <div v-if="todos" class="row">
       <div class="col-6 offset-3">
         <input
@@ -24,9 +18,6 @@
           v-model="newTodo"
           @keyup.enter="addTodo"
         />
-        <button class="d-none" @click="addTodo">
-          Ок
-        </button>
       </div>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
@@ -64,6 +55,10 @@
         </div>
       </div>
     </div>
+    <filter-task
+      v-if="todos && todos.length > 0"
+      :todos="this.todos"
+    ></filter-task>
     <div v-if="todos" class="row">
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
@@ -136,7 +131,9 @@
 <script>
   import Swal from 'sweetalert2'
   import axios from 'axios'
+  import Preloader from './Preloader'
   export default {
+    components: { Preloader },
     name: 'todo-list',
     props: { userId: Number },
     metaInfo() {
@@ -151,26 +148,27 @@
         clickRemove: undefined,
         newTodo: '',
         beforeEditCache: '',
-        filter: 'all',
-        todos: null
+        todos: null,
+        filter: 'all'
       }
     },
     computed: {
-      remaining() {
-        return this.todos.filter(todo => !todo.completed).length
-      },
+      // счетчик количества выполненных задач
+      // remaining() {
+      //   return this.todos.filter(todo => !todo.completed).length
+      // },
       // правописание словосочетания 'задач осталось'
-      remainingTitle() {
-        var title = ''
-        if (this.remaining === 1) {
-          title = 'задача осталась'
-        } else if (this.remaining >= 2 && this.remaining <= 4) {
-          title = 'задачи осталось'
-        } else {
-          title = 'задач осталось'
-        }
-        return title
-      },
+      // remainingTitle() {
+      //   var title = ''
+      //   if (this.remaining === 1) {
+      //     title = 'задача осталась'
+      //   } else if (this.remaining >= 2 && this.remaining <= 4) {
+      //     title = 'задачи осталось'
+      //   } else {
+      //     title = 'задач осталось'
+      //   }
+      //   return title
+      // },
       todosFiltered() {
         if (this.filter === 'all') {
           const initialArray = this.todos
@@ -283,7 +281,7 @@
         .then(response => {
           setTimeout(() => {
             this.todos = response.data.reverse()
-            console.log(response.data)
+            // console.log(response.data)
           }, 750)
         })
         .catch(error => console.log(error))
