@@ -309,6 +309,10 @@
       background: #0F121B
       border: none
       outline: none
+      &:hover .todo-item__remove
+        opacity: 1
+      &:hover .todo-item__change
+        opacity: 1
       &__title
         padding-left: 10px
         padding-right: 7px
@@ -318,10 +322,14 @@
         user-select: none
         margin-left: 9px
         color: #FF2D2D
+        opacity: 0
+        transition: .2s
       &__change
         cursor: pointer
         user-select: none
         color: #fff
+        opacity: 0
+        transition: .2s
         &:hover
           color: #000
       &__edit
