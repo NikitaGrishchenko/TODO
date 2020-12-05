@@ -25,40 +25,10 @@
         <h3>Активных задач нет</h3>
       </div>
     </div>
-    <div v-if="todos && todos.length > 0" class="row">
-      <div class="col-6 offset-3 mb-2">
-        <div class="todo-box-btn">
-          <button
-            type="button"
-            class="todo-box-btn__item"
-            :class="{ active: filter == 'all' }"
-            @click="filter = 'all'"
-          >
-            Все
-          </button>
-          <button
-            type="button"
-            class="todo-box-btn__item"
-            :class="{ active: filter == 'active' }"
-            @click="filter = 'active'"
-          >
-            Активные
-          </button>
-          <button
-            type="button"
-            class="todo-box-btn__item"
-            :class="{ active: filter == 'completed' }"
-            @click="filter = 'completed'"
-          >
-            Завершённые
-          </button>
-        </div>
-      </div>
-    </div>
-    <filter-task
+    <!-- <filter-task
       v-if="todos && todos.length > 0"
       :todos="this.todos"
-    ></filter-task>
+    ></filter-task> -->
     <div v-if="todos" class="row">
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
@@ -124,6 +94,36 @@
           </div>
         </div>
       </transition-group>
+    </div>
+    <div v-if="todos && todos.length > 0" class="row">
+      <div class="col-6 offset-3 mb-2">
+        <div class="todo-box-btn">
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'all' }"
+            @click="filter = 'all'"
+          >
+            Все
+          </button>
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'active' }"
+            @click="filter = 'active'"
+          >
+            Активные
+          </button>
+          <button
+            type="button"
+            class="todo-box-btn__item"
+            :class="{ active: filter == 'completed' }"
+            @click="filter = 'completed'"
+          >
+            Завершённые
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
