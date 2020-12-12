@@ -1,7 +1,15 @@
 from rest_framework import generics
-from ..models import Todo
-from .serializers import TodoListSerializer
+from ..models import Todo, Priority
+from .serializers import TodoListSerializer, PriorityListSerializer
 from rest_framework.permissions import IsAuthenticated
+
+
+class PriorityListView(generics.ListCreateAPIView):
+    """ Вывод списка задач """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PriorityListSerializer
+    queryset = Priority.objects.all()
 
 
 class TodoListView(generics.ListCreateAPIView):

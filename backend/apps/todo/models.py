@@ -2,23 +2,47 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Priority(models.Model):
+    """
+    Приоритет задач
+    """
+
+    name = models.CharField(max_length=250)
+    color = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "Приоритет"
+        verbose_name_plural = "Приоритеты"
+        unique_together = ["name", "color"]
+
+    def __str__(self):
+        return self.name
+
+
 class Todo(models.Model):
-    PRIORITY = (
-        ("T", "3ур"),
-        ("S", "2ур"),
-        ("F", "1ур"),
-        ("Z", "Обычный"),
-    )
+    """
+    Задача
+    """
 
     title = models.CharField(blank=True, max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, blank=True)
     editing = models.BooleanField(default=False)
-    priority = models.CharField(
-        max_length=100, choices=PRIORITY, default="Z", null=True
+    priority = models.ForeignKey(
+        Priority, on_delete=models.CASCADE, related_name="priority"
     )
+    priority_color = models.CharField(blank=True, null=True, max_length=250)
     date = models.DateField(blank=True, null=True)
+
+    def get_priority_color(self):
+        x = self.priority.color
+        return x
+
+    def save(self, *args, **kwargs):
+        self.priority_color = self.get_priority_color()
+        # self.priority_color = "red"
+        super(Todo, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Задача"

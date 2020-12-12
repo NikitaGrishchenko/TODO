@@ -25,10 +25,6 @@
         <h3>Активных задач нет</h3>
       </div>
     </div>
-    <!-- <filter-task
-      v-if="todos && todos.length > 0"
-      :todos="this.todos"
-    ></filter-task> -->
     <div v-if="todos" class="row">
       <!-- <div class="col-6 offset-3 text-right mb-3">
         <div>{{ remaining }} {{ remainingTitle }}</div>
@@ -43,31 +39,37 @@
           class="todo-item d-flex justify-content-between align-items-center"
           v-for="(todo, index) in todosFiltered"
           :key="todo.id"
+          :style="{ border: '1px solid' + ' ' + todo.priority_color }"
         >
-          <div class="d-flex justify-content-between align-items-center">
-            <input
-              type="checkbox"
-              v-model="todo.completed"
-              class="todo-item__checkbox"
-              @change="checkTodo(index)"
-            />
-            <div
-              v-if="!todo.editing"
-              class="todo-item__title"
-              :class="{ completed: todo.completed }"
-            >
-              {{ todo.title }}
-            </div>
-            <div class="d-flex" v-else>
+          <div class="todo-right">
+            <div class="d-flex align-items-center">
               <input
-                class="todo-item__edit"
-                type="text"
-                v-model="todo.title"
-                @keyup.esc="cancelEdit(todo)"
+                type="checkbox"
+                v-model="todo.completed"
+                class="todo-item__checkbox"
+                @change="checkTodo(index)"
               />
-              <button @click="doneEdit(index)">
-                Ок
-              </button>
+              <div
+                v-if="!todo.editing"
+                class="todo-item__title"
+                :class="{ completed: todo.completed }"
+              >
+                {{ todo.title }}
+              </div>
+              <div class="d-flex" v-else>
+                <input
+                  class="todo-item__edit"
+                  type="text"
+                  v-model="todo.title"
+                  @keyup.esc="cancelEdit(todo)"
+                />
+                <button @click="doneEdit(index)">
+                  Ок
+                </button>
+              </div>
+            </div>
+            <div class="todo-item__date">
+              {{ todo.date }}
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
@@ -149,7 +151,8 @@
         newTodo: '',
         beforeEditCache: '',
         todos: null,
-        filter: 'all'
+        filter: 'all',
+        todoItemPriority: 'red'
       }
     },
     computed: {
@@ -281,7 +284,7 @@
         .then(response => {
           setTimeout(() => {
             this.todos = response.data.reverse()
-            // console.log(response.data)
+            console.log(this.todos)
           }, 750)
         })
         .catch(error => console.log(error))
