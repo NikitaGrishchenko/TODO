@@ -36,12 +36,11 @@ class Todo(models.Model):
     date = models.DateField(blank=True, null=True)
 
     def get_priority_color(self):
-        x = self.priority.color
-        return x
+        color = self.priority.color
+        return color
 
     def save(self, *args, **kwargs):
         self.priority_color = self.get_priority_color()
-        # self.priority_color = "red"
         super(Todo, self).save(*args, **kwargs)
 
     class Meta:

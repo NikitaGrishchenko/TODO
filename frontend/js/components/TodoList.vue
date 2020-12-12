@@ -18,6 +18,15 @@
           v-model="newTodo"
           @keyup.enter="addTodo"
         />
+        <datepicker
+          v-model="inputDatePicker"
+          :language="ru"
+          :clear-button="true"
+          :calendar-button="true"
+          :monday-first="true"
+          :format="format"
+        ></datepicker>
+        {{ inputDatePicker }}
       </div>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
@@ -134,8 +143,12 @@
   import Swal from 'sweetalert2'
   import axios from 'axios'
   import Preloader from './Preloader'
+  import Datepicker from 'vuejs-datepicker'
+  import { ru } from 'vuejs-datepicker/dist/locale'
+  import moment from 'moment'
+
   export default {
-    components: { Preloader },
+    components: { Preloader, Datepicker },
     name: 'todo-list',
     props: { userId: Number },
     metaInfo() {
@@ -147,12 +160,15 @@
     },
     data() {
       return {
+        ru: ru,
         clickRemove: undefined,
         newTodo: '',
         beforeEditCache: '',
         todos: null,
         filter: 'all',
-        todoItemPriority: 'red'
+        todoItemPriority: 'red',
+        inputDatePicker: moment().format(),
+        format: 'd MMM'
       }
     },
     computed: {
@@ -189,6 +205,11 @@
       }
     },
     methods: {
+      //форматирование даты для API
+      // customFormatter(date) {
+      //   moment.lang('ru')
+      //   return moment(date).format('d MMMM, dddd')
+      // },
       addTodo() {
         if (this.newTodo.trim().length === 0) {
           return Swal.fire({
@@ -205,7 +226,10 @@
             title: this.newTodo,
             completed: false,
             editing: false,
-            user: this.userId
+            user: this.userId,
+            priority: 1,
+            date: moment(this.inputDatePicker).format('YYYY-MM-DD'),
+            priority_color: null
           }
           this.newTodo = ''
           axios
@@ -216,7 +240,10 @@
                 id: newArray.id,
                 title: newArray.title,
                 completed: false,
-                editing: false
+                editing: false,
+                priority: '1',
+                date: newArray.date,
+                priority_color: null
               })
               // Swal.fire({
               //   toast: true,
