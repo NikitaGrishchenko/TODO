@@ -11,22 +11,30 @@
     <preloader v-if="!todos"></preloader>
     <div v-if="todos" class="row">
       <div class="col-6 offset-3">
-        <input
-          type="text"
-          class="todo-input"
-          placeholder="Что надо сделать?"
-          v-model="newTodo"
-          @keyup.enter="addTodo"
-        />
-        <datepicker
-          v-model="inputDatePicker"
-          :language="ru"
-          :clear-button="true"
-          :calendar-button="true"
-          :monday-first="true"
-          :format="format"
-        ></datepicker>
-        {{ inputDatePicker }}
+        <div class="todo-input__wrapper">
+          <textarea
+            type="text"
+            class="todo-input"
+            placeholder="Что надо сделать?"
+            v-model="newTodo"
+            @keyup.enter="addTodo"
+          ></textarea>
+          <div class="todo-input__footer d-flex align-content-center">
+            <datepicker
+              input-class="todo-datepicker"
+              v-model="inputDatePicker"
+              :language="ru"
+              :monday-first="true"
+              :format="format"
+            ></datepicker>
+            <select class="todo-select" v-model="selectedUserPriority">
+              <option class="todo-option__4" value="4">Обычный</option>
+              <option value="1">1 приоритет</option>
+              <option value="2">2 приоритет</option>
+              <option value="3">3 приоритет</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
     <div v-if="todos && todos.length === 0" class="row">
@@ -48,7 +56,6 @@
           class="todo-item d-flex justify-content-between align-items-center"
           v-for="(todo, index) in todosFiltered"
           :key="todo.id"
-          :style="{ border: '1px solid' + ' ' + todo.priority_color }"
         >
           <div class="todo-right">
             <div class="d-flex align-items-center">
@@ -62,6 +69,9 @@
                 v-if="!todo.editing"
                 class="todo-item__title"
                 :class="{ completed: todo.completed }"
+                :style="{
+                  'border-bottom': '1px solid' + ' ' + todo.priority_color
+                }"
               >
                 {{ todo.title }}
               </div>
@@ -166,9 +176,9 @@
         beforeEditCache: '',
         todos: null,
         filter: 'all',
-        todoItemPriority: 'red',
         inputDatePicker: moment().format(),
-        format: 'd MMM'
+        format: 'd MMM',
+        selectedUserPriority: '4'
       }
     },
     computed: {
@@ -227,9 +237,8 @@
             completed: false,
             editing: false,
             user: this.userId,
-            priority: 1,
-            date: moment(this.inputDatePicker).format('YYYY-MM-DD'),
-            priority_color: null
+            priority: this.selectedUserPriority,
+            date: moment(this.inputDatePicker).format('YYYY-MM-DD')
           }
           this.newTodo = ''
           axios
@@ -241,9 +250,9 @@
                 title: newArray.title,
                 completed: false,
                 editing: false,
-                priority: '1',
+                priority: newArray.priority,
                 date: newArray.date,
-                priority_color: null
+                priority_color: newArray.priority_color
               })
               // Swal.fire({
               //   toast: true,
@@ -327,7 +336,11 @@
     &-container
     &-wrapper
     &-input
-      background: url(../../static/img/plus-input.png) no-repeat 3px 11px
+      background: url(../../static/img/plus-input.png) no-repeat 3px 0px
+      &__wrapper
+        border-bottom: 0.5px solid #fff
+        padding: 10px 0
+        margin-bottom: 10px
     &-item
       font-size: 18px
       animation-duration: 0.3s
@@ -342,8 +355,11 @@
       &:hover .todo-item__change
         opacity: 1
       &__title
-        padding-left: 10px
-        padding-right: 7px
+        margin-left: 10px
+        padding-right: 2px
+        margin-right: 10px
+        padding-bottom: 2px
+        margin-bottom: 5px
         color: #ffffff
       &__remove
         cursor: pointer
@@ -370,6 +386,7 @@
           outline: none
       &__checkbox
         margin-right: 7px
+        margin-top: -8.5px
     &-box-btn
       display: flex
       justify-content: flex-end
