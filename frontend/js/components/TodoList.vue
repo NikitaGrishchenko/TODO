@@ -19,20 +19,25 @@
             v-model="newTodo"
             @keyup.enter="addTodo"
           ></textarea>
-          <div class="todo-input__footer d-flex align-content-center">
-            <datepicker
-              input-class="todo-datepicker"
-              v-model="inputDatePicker"
-              :language="ru"
-              :monday-first="true"
-              :format="format"
-            ></datepicker>
-            <select class="todo-select" v-model="selectedUserPriority">
-              <option class="todo-option__4" value="4">Обычный</option>
-              <option value="1">1 приоритет</option>
-              <option value="2">2 приоритет</option>
-              <option value="3">3 приоритет</option>
-            </select>
+          <div
+            class="todo-input__footer d-flex align-content-center justify-content-between"
+          >
+            <div class="d-flex align-content-center">
+              <datepicker
+                input-class="todo-datepicker"
+                v-model="inputDatePicker"
+                :language="ru"
+                :monday-first="true"
+                :format="format"
+              ></datepicker>
+              <select class="todo-select" v-model="selectedUserPriority">
+                <option class="todo-option__4" value="4">Обычный</option>
+                <option value="1">1 приоритет</option>
+                <option value="2">2 приоритет</option>
+                <option value="3">3 приоритет</option>
+              </select>
+            </div>
+            <div class="todo-input__btn" @click="addTodo">Добавить</div>
           </div>
         </div>
       </div>
@@ -88,7 +93,7 @@
               </div>
             </div>
             <div class="todo-item__date">
-              {{ todo.date }}
+              {{ format_date(todo.date) }}
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
@@ -215,11 +220,12 @@
       }
     },
     methods: {
-      //форматирование даты для API
-      // customFormatter(date) {
-      //   moment.lang('ru')
-      //   return moment(date).format('d MMMM, dddd')
-      // },
+      format_date(value) {
+        if (value) {
+          moment.locale('ru')
+          return moment(value, 'D-M-YYYY').format('D MMMM')
+        }
+      },
       addTodo() {
         if (this.newTodo.trim().length === 0) {
           return Swal.fire({
@@ -341,6 +347,14 @@
         border-bottom: 0.5px solid #fff
         padding: 10px 0
         margin-bottom: 10px
+      &__btn
+        background: #0f121b
+        color: #ffffff
+        padding: 5px 10px
+        border-radius: 5px
+        cursor: pointer
+        &:hover
+          background: #12151d
     &-item
       font-size: 18px
       animation-duration: 0.3s

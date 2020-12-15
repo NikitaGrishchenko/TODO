@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from ..models import Todo, Priority
+
+from ..models import Priority, Todo
 
 # from drf_writable_nested import WritableNestedModelSerializer
 
@@ -19,8 +20,9 @@ class PriorityListSerializer(serializers.ModelSerializer):
 class TodoListSerializer(serializers.ModelSerializer):
     """ Список задач """
 
-    # priority = PriorityListSerializer()
-    # priority_color = serializers.CharField(default=priority_color_def)
+    date = serializers.DateField(
+        format="%d-%m-%Y",
+    )
 
     class Meta:
         model = Todo
