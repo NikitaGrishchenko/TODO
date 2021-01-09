@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load  static  %}
+{% load  widget_tweaks %}
 
 {% block content %}
   {% if user.is_authenticated %}
@@ -6,18 +8,93 @@
     <p>Вы уже авторизированы</p>
   {% else %}
     <div class="signup">
-  <h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-5">
+            <h1>Регистрация</h1>
+          </div>
+          <div class="col-12">
+            <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
 
-  {{form.username}}
-  {{form.email}}
-  {{form.password1}}
-  {{form.password2}}
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.first_name.label}}*
+                </div>
+                <div class="col-4">
+                  {% render_field form.first_name class="signup-input" placeholder="" %}
+                </div>
+              </div>
 
-  <button type="submit">Sign up</button>
-</form>
-{{form.errors}}
-</div>
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.last_name.label}}
+                </div>
+                <div class="col-4">
+                  {% render_field form.last_name class="signup-input" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.email.label}}*
+                </div>
+                <div class="col-5">
+                  {% render_field form.email class="signup-input" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.date_of_birth.label}}*
+                </div>
+                <div class="col-3">
+                  {% render_field form.date_of_birth class="signup-input" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.photo.label}}
+                </div>
+                <div class="col-6">
+                  {% render_field form.photo class="signup-input__photo" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.password1.label}}*
+                </div>
+                <div class="col-4">
+                  {% render_field form.password1 class="signup-input" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center">
+                <div class="col-2">
+                  {{form.password2.label}}*
+                </div>
+                <div class="col-4">
+                  {% render_field form.password2 class="signup-input" placeholder="" %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button class="signup-btn" type="submit">Зарегистрироваться</button>
+              </div>
+
+            </form>
+          </div>
+          <div class="col-12">
+            {% if form.errors %}
+              <div class="login-error d-flex align-items-center">
+                {{form.errors}}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
   {% endif %}
 {% endblock content %}

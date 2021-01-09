@@ -10,7 +10,7 @@ python3 -m venv .venv – создание виртуального окруже
 source .venv/bin/activate – активация виртуального окружения Linux
 
 python -m venv .venv – создание виртуального окружения Windows
-.venv/Scripts/activate – активация виртуального окружения Windows
+source .venv/Scripts/activate – активация виртуального окружения Windows
 
 pip freeze – вывести установленные модули в консоль
 pip freeze > requirements.txt – сохранить установленные модули в файл
@@ -29,6 +29,8 @@ python ./backend/manage.py migrate – выполнить миграции
 2. cd backend
 3. django-admin startapp example apps/example
 ```
+
+
 # TASKS
 
 ```
@@ -42,5 +44,11 @@ python ./backend/manage.py migrate – выполнить миграции
 [ ]6. Избавиться от editing в БД
 [x]7. Изменить форму добавления, добавить возможность выбора дедлайна и приоритета 
 [ ]8. Выводить приоритеты из API
+[x]9. Расширить админку
+[ ]10. Регистрация
+  [ ]10.1 Валидация пароля
+  [ ]10.2 Вывод на login.html информацию об успешной регистрации
+  [ ]10.1 Вывод ошибок на signup.html
+
 ```
 
