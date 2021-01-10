@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -17,4 +18,5 @@ class SignUpView(generic.CreateView):
         user = form.save(commit=False)
         user.username = user.email
         user.save()
+        messages.success(self.request, "Вы успешно зарегистрированы")
         return super().form_valid(form)

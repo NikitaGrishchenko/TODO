@@ -23,6 +23,7 @@ STATIC_DIR = os.path.join(FRONTEND_DIR, "static")
 TEMPLATES_DIR = os.path.join(FRONTEND_DIR, "templates")
 DIST_DIR = os.path.join(STATIC_DIR, "dist")
 WEBPACK_STATS_FILE = os.path.join(DIST_DIR, "webpack-stats.json")
+PUBLIC_MEDIA_DIR = os.path.join(STATIC_DIR, "media")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -98,18 +99,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    # },
 ]
 
 
@@ -140,9 +141,12 @@ WEBPACK_LOADER = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
+STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
+MEDIA_ROOT = PUBLIC_MEDIA_DIR
+MEDIA_URL = "/media/"
+
 
 # Auth
 
@@ -150,8 +154,6 @@ LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
 # Отключение встроенной валидации пароля
-
-ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
 
 AUTH_USER_MODEL = "user_auth.User"
 

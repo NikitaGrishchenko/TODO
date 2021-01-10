@@ -16,12 +16,23 @@
                 <div class="col-12 mb-3">
                   <img src="{% static 'img/logo.png' %}" alt="" class="login-img">
                 </div>
+                <div class="col-12 ">
+                  <div class="login-messages">
+                    {% if messages %}
+                      <ul class="messages">
+                        {% for message in messages %}
+                          <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </div>
                 <div class="col-12">
                   <div class="login-forms">
                     <form method="post">
                       {% csrf_token %}
                       <div class="form-box">
-                        {% render_field form.username class="login-input login-input--username" placeholder="Имя пользователя" %}
+                        {% render_field form.username class="login-input login-input--username" placeholder="E-mail" %}
                       </div>
                       <div class="form-box">
                         {% render_field form.password class="login-input login-input--password" placeholder="Пароль" %}
@@ -40,8 +51,8 @@
                 <div class="col-12">
                   <div class="login-footer d-flex justify-content-center align-items-center">
                     <a class="login-footer__link" href="{% url 'signup' %}">Регистрация</a>
-                    <span class="login-footer__span">  </span>
-                    <a class="login-footer__restore" href="#">Забыли пароль?</a>
+                    {% comment %} <span class="login-footer__span">  </span>
+                    <a class="login-footer__restore" href="#">Забыли пароль?</a> {% endcomment %}
                   </div>
                 </div>
               </div>

@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 
 # from .managers import UserManager
 from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -23,7 +24,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=("Дата рождения"), blank=True, null=True
     )
     photo = models.ImageField(
-        verbose_name=("Аватарка"), upload_to="photo/", null=True, blank=True
+        verbose_name=("Аватарка"),
+        upload_to="photo/",
+        null=True,
+        blank=True,
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=["pdf", "jpeg", "jpg", "png", "heic"]
+            )
+        ],
     )
     is_active = models.BooleanField(_("active"), default=True)
     date_joined = models.DateTimeField(
