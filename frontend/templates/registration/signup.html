@@ -1,23 +1,123 @@
 {% extends 'base.html' %}
+{% load  static  %}
+{% load  widget_tweaks %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    <h1>Ошибка</h1>
-    <p>Вы уже авторизированы</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-3 m-5 p-5 mx-auto text-center text-white">
+          <h1>Ошибка</h1>
+          <p>Вы уже авторизированы</p>
+          <a class="btn btn-primary my-3" href="/">Назад</a>
+        </div>
+      </div>
+    </div>
   {% else %}
     <div class="signup">
-  <h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-5">
+            <h1>Регистрация</h1>
+          </div>
+          <div class="col-12">
+            <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
 
-  {{form.username}}
-  {{form.email}}
-  {{form.password1}}
-  {{form.password2}}
+              <div class="row signup-line d-flex align-items-center {% if form.first_name.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.first_name.label}}*
+                </div>
+                <div class="col-6">
+                  {% render_field form.first_name class="signup-input" id="first_name" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.first_name.errors}}
+                </div>
+              </div>
 
-  <button type="submit">Sign up</button>
-</form>
-{{form.errors}}
-</div>
+              <div class="row signup-line d-flex align-items-center {% if form.last_name.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.last_name.label}}
+                </div>
+                <div class="col-6">
+                  {% render_field form.last_name class="signup-input" id="last_name" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                    {{ form.last_name.errors}}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center {% if form.email.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.email.label}}*
+                </div>
+                <div class="col-6">
+                  {% render_field form.email class="signup-input" id="email" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.email.errors}}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center {% if form.date_of_birth.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.date_of_birth.label}}*
+                </div>
+                <div class="col-6">
+                  {% render_field form.date_of_birth class="signup-input" id="date_of_birth" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.date_of_birth.errors}}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center {% if form.photo.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.photo.label}}
+                  <p class="signup-line__subtitle">Форматы: jpg, jpeg, png</p>
+                  <p class="signup-line__subtitle">Максимальный размер изображения: 10 Мб</p>
+                </div>
+                <div class="col-6">
+                  {% render_field form.photo class="signup-input__photo" id="photo" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.photo.errors}}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center {% if form.password1.errors or form.password2.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.password1.label}}*
+                </div>
+                <div class="col-6">
+                  {% render_field form.password1 class="signup-input" id="password1" placeholder="" data-tip="This is the text of the tooltip2" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.password1.errors}}
+                </div>
+              </div>
+
+              <div class="row signup-line d-flex align-items-center {% if form.password1.errors or form.password2.errors %} signup-error{% endif %}">
+                <div class="col-3">
+                  {{form.password2.label}}*
+                </div>
+                <div class="col-6">
+                  {% render_field form.password2 class="signup-input" id="password2" placeholder="" %}
+                </div>
+                <div class="col-lg-3 signup-error">
+                  {{ form.password2.errors}}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button class="signup-btn" type="submit">Зарегистрироваться</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   {% endif %}
 {% endblock content %}

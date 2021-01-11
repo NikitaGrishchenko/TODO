@@ -1,0 +1,96 @@
+.todo
+  &-input
+    background: url(/static/img/plus-input.png) no-repeat 6px 2px
+    &__wrapper
+      border-bottom: 0.5px solid #fff
+      padding: 10px 0
+      margin-bottom: 10px
+    &__btn
+      background: #0f121b
+      color: #ffffff
+      padding: 5px 10px
+      border-radius: 5px
+      cursor: pointer
+      &:hover
+        background: #12151d
+  &-item
+    font-size: 18px
+    animation-duration: 0.3s !important
+    padding: 20px 20px
+    margin: 10px 0px
+    border-radius: 15px
+    background: #0F121B
+    border: none
+    outline: none
+    &:hover .todo-item__remove
+      opacity: 1
+    &:hover .todo-item__change
+      opacity: 1
+    &__title
+      margin-left: 10px
+      padding-right: 2px
+      margin-right: 10px
+      padding-bottom: 2px
+      margin-bottom: 5px
+      color: #ffffff
+    &__remove
+      cursor: pointer
+      user-select: none
+      margin-left: 9px
+      color: #FF2D2D
+      opacity: 0
+      transition: .2s
+    &__change
+      cursor: pointer
+      user-select: none
+      color: #fff
+      opacity: 0
+      transition: .2s
+      &:hover
+        color: #000
+    &__edit
+      font-size: 18px
+      margin-left: -5px
+      width: 100%
+      padding: 5px
+      border: 1px solid #ccc
+      &:focus
+        outline: none
+    &__checkbox
+      margin-right: 7px
+      margin-top: -8.5px
+  &-box-btn
+    display: flex
+    justify-content: flex-end
+    margin-top: 10px
+    position: fixed
+    bottom: 10px
+    right: 50px
+    &__item
+      display: inline-block
+      margin-left: 10px
+      padding: 8px 15px
+      border-radius: 15px
+      background: transparent
+      border: none
+      border: 1px solid #7B7D8A
+      outline: none
+      color: #7B7D8A
+  &-logo
+    margin-top: 30px
+    margin-bottom: 10px
+    &__img
+      user-select: none
+.completed
+  text-decoration: line-through
+  color: #7b7d8a
+.clickRemove
+  visibility: hidden
+.btn
+  border-radius: 0px !important
+.active
+  background: transparent
+  color: #fff
+  border: 1px solid #fff
+.none-active
+  color: #ffffff

@@ -5,7 +5,6 @@
 {% block content%}
 
 
-
   {% if user.is_authenticated %}
       <sidebar user-name="{{user.username}}"></sidebar>
       <todo-list :user-id="{{user.id}}"></todo-list>
