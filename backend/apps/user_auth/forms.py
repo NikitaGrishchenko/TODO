@@ -43,7 +43,21 @@ class CreationUserForm(UserCreationForm):
         return self.cleaned_data["password2"]
 
     def clean_email(self):
+        # pattern_email = re.compile("(^|\s)[-a-z0-9_.]+@([-a-z0-9]+\.)+[a-z]{2,6}(\s|$)")
+        # email_re = pattern_email.match(self.cleaned_data["email"])
+        # if not email_re:
+        #     raise forms.ValidationError("E-mail не валиден")
         email = self.cleaned_data["email"]
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Пользователь с таким E-mail уже существует")
+
         return email
+
+    def clean_photo(self):
+        photo = self.cleaned_data["photo"]
+        if photo:
+            if photo.size > 10 * 1024 * 1024:
+                raise forms.ValidationError(
+                    "Загружаемое фото должно быть не больше 10 Мб"
+                )
+        return photo

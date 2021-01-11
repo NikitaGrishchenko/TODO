@@ -37,14 +37,9 @@
                 <option value="3">3 приоритет</option>
               </select>
             </div>
-            <div class="todo-input__btn" @click="addItem">+</div>
+            <div class="todo-input__btn" @click="addItem">Добавить</div>
           </div>
         </div>
-      </div>
-    </div>
-    <div v-if="todos && todos.length === 0" class="row">
-      <div class="col-6 offset-3 text-center mt-3 none-active">
-        <h3>Активных задач нет</h3>
       </div>
     </div>
     <div class="row">
@@ -65,11 +60,18 @@
           @check="checkItem"
         />
       </transition-group>
-      <div v-else class="col-6 offset-3">
-        нет задач
+      <div
+        v-if="todos && todosFiltered.length == 0"
+        class="col-6 offset-3 text-center mt-5 none-active"
+      >
+        <h3>Задач нет</h3>
       </div>
     </div>
-
+    <div v-if="todos && todos.length === 0" class="row">
+      <div class="col-6 offset-3 text-center none-active">
+        <p>Напишите выше, что нужно сделать и нажмите Enter</p>
+      </div>
+    </div>
     <div v-if="todos && todos.length > 0">
       <div class="todo-box-btn">
         <filter-item

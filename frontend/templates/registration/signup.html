@@ -4,8 +4,15 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <h1>Ошибка</h1>
-    <p>Вы уже авторизированы</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-3 m-5 p-5 mx-auto text-center text-white">
+          <h1>Ошибка</h1>
+          <p>Вы уже авторизированы</p>
+          <a class="btn btn-primary my-3" href="/">Назад</a>
+        </div>
+      </div>
+    </div>
   {% else %}
     <div class="signup">
       <div class="container">
@@ -18,10 +25,10 @@
               {% csrf_token %}
 
               <div class="row signup-line d-flex align-items-center {% if form.first_name.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.first_name.label}}*
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.first_name class="signup-input" id="first_name" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -30,10 +37,10 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.last_name.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.last_name.label}}
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.last_name class="signup-input" id="last_name" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -42,10 +49,10 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.email.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.email.label}}*
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.email class="signup-input" id="email" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -54,10 +61,10 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.date_of_birth.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.date_of_birth.label}}*
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.date_of_birth class="signup-input" id="date_of_birth" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -66,10 +73,12 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.photo.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.photo.label}}
+                  <p class="signup-line__subtitle">Форматы: jpg, jpeg, png</p>
+                  <p class="signup-line__subtitle">Максимальный размер изображения: 10 Мб</p>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.photo class="signup-input__photo" id="photo" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -78,10 +87,10 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.password1.errors or form.password2.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.password1.label}}*
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.password1 class="signup-input" id="password1" placeholder="" data-tip="This is the text of the tooltip2" %}
                 </div>
                 <div class="col-lg-3 signup-error">
@@ -90,10 +99,10 @@
               </div>
 
               <div class="row signup-line d-flex align-items-center {% if form.password1.errors or form.password2.errors %} signup-error{% endif %}">
-                <div class="col-2">
+                <div class="col-3">
                   {{form.password2.label}}*
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {% render_field form.password2 class="signup-input" id="password2" placeholder="" %}
                 </div>
                 <div class="col-lg-3 signup-error">

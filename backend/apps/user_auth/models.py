@@ -28,11 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         upload_to="photo/",
         null=True,
         blank=True,
-        validators=[
-            FileExtensionValidator(
-                allowed_extensions=["pdf", "jpeg", "jpg", "png", "heic"]
-            )
-        ],
+        validators=[FileExtensionValidator(allowed_extensions=["jpeg", "jpg", "png"])],
     )
     is_active = models.BooleanField(_("active"), default=True)
     date_joined = models.DateTimeField(
@@ -53,4 +49,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         swappable = "AUTH_USER_MODEL"
         verbose_name = _("Пользователь")
         verbose_name_plural = _("Пользователи")
-        ordering = ("-pk",)
+        ordering = ("-date_joined",)

@@ -9,9 +9,9 @@
         alt=""
         class="sidebar-user__img mt-3 mb-1"
       />
-      <div class="sidebar-user__username">
-        {{ this.userName }}
-      </div>
+      <p class="sidebar-user__username">
+        <!-- {{ this.userName }} -->
+      </p>
     </div>
     <a class="mb-3" href="/auth/logout/">
       <img src="static/img/sidebar-exit.png" alt="" class="sidebar-exit" />
