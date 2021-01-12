@@ -13,7 +13,7 @@
         <!-- {{ this.userName }} -->
       </p>
     </div>
-    <a class="mb-3" href="/auth/logout/">
+    <a class="mb-3" href="/auth/confirmation-output">
       <img src="static/img/sidebar-exit.png" alt="" class="sidebar-exit" />
     </a>
   </div>

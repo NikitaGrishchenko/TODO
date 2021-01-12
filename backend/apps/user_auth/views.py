@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic import TemplateView
 
 from .forms import CreationUserForm
 
@@ -20,3 +21,11 @@ class SignUpView(generic.CreateView):
         user.save()
         messages.success(self.request, "Вы успешно зарегистрированы")
         return super().form_valid(form)
+
+
+class ConfirmationOutputView(TemplateView):
+    """
+    Страница подтверждения выхода
+    """
+
+    template_name = "pages/confirmation-output.html"
