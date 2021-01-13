@@ -156,15 +156,15 @@
         this.filter = id
       },
       updateTodoItem(item) {
+        console.log(item.date)
         const saveDate = {
           ...item,
-          date: moment(item.date, 'DD-MM-YYYY').format('DD-MM-YYYY')
+          date: moment(item.date, 'MM-DD-YYYY').format('YYYY-MM-DD')
         }
-        console.log(saveDate.date)
         axios
           .patch(`todo/${item.id}/`, saveDate)
           .then(() => {
-            item.editing = false
+            console.log(saveDate.date)
           })
           .catch(error => {
             console.log(error)

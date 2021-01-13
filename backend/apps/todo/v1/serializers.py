@@ -21,7 +21,7 @@ class TodoListSerializer(serializers.ModelSerializer):
     """ Список задач """
 
     date = serializers.DateField(
-        format="%d-%m-%Y",
+        format="%m-%d-%Y",
     )
 
     class Meta:

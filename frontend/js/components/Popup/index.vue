@@ -6,18 +6,15 @@
       </div>
     </div>
     <div class="popup-main">
-      <input v-model="item.title" type="text" />
+      <input v-model="item.title" type="text" @blur="doneEdit" />
       <datepicker
         input-class="todo-datepicker"
-        :value="dateItemFormat"
+        v-model="item.date"
         :language="ru"
         :monday-first="true"
         :format="format"
+        @closed="doneEdit"
       ></datepicker>
-      <button @click="doneEdit">
-        Ок
-      </button>
-      {{ item.date }}
     </div>
   </div>
 </template>
@@ -35,7 +32,7 @@
     },
     computed: {
       dateItemFormat() {
-        return moment(this.item.date, 'D-M-YYYY').format()
+        return moment(this.item.date).format()
       }
     },
     date() {
@@ -49,6 +46,13 @@
         this.$emit('doneEdit')
       }
     }
+    // directives: {
+    //   focus: {
+    //     inserted: function(el) {
+    //       el.focus()
+    //     }
+    //   }
+    // }
   }
 </script>
 
@@ -65,6 +69,5 @@
     z-index: 100
     & .todo-datepicker
       color: #000000 !important
-
     &-header
 </style>

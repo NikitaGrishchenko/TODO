@@ -77,7 +77,7 @@
     computed: {
       format_date() {
         moment.locale('ru')
-        return moment(this.item.date, 'D-M-YYYY').format('D MMMM')
+        return moment(this.item.date, 'M-D-YYYY').format('D MMMM')
       }
     },
     methods: {
