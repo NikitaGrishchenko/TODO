@@ -1,22 +1,26 @@
 <template>
-  <div class="popup">
-    <div class="popup-header d-flex justify-content-end">
-      <div class="popup-header__close" @click="closePopup">
-        закрыть
+  <transition name="modal-fade">
+    <div @click.self="closePopup" class="popup-wrapper">
+      <div class="popup">
+        <div class="popup-header d-flex justify-content-end">
+          <div class="popup-header__close" @click="closePopup">
+            закрыть
+          </div>
+        </div>
+        <div class="popup-main">
+          <input v-model="item.title" type="text" @blur="doneEdit" />
+          <datepicker
+            input-class="todo-datepicker"
+            v-model="item.date"
+            :language="ru"
+            :monday-first="true"
+            :format="format"
+            @closed="doneEdit"
+          ></datepicker>
+        </div>
       </div>
     </div>
-    <div class="popup-main">
-      <input v-model="item.title" type="text" @blur="doneEdit" />
-      <datepicker
-        input-class="todo-datepicker"
-        v-model="item.date"
-        :language="ru"
-        :monday-first="true"
-        :format="format"
-        @closed="doneEdit"
-      ></datepicker>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -59,15 +63,29 @@
 <style lang="sass">
   .popup
     padding: 20px
-    position: fixed
-    top: 50%
-    left: 50%
-    transform: translate(-50%,-50%)
     width: 500px
-    height: 500px
-    background: #f3f3f3
+    min-height: 300px
+    background: #fff
     z-index: 100
+    border-radius: 15px
+    &-wrapper
+      position: fixed
+      height: 100%
+      width: 100%
+      left: 0
+      top: 0
+      background: rgba(0,0,0,.6)
+      z-index: 100
+      display: flex
+      justify-content: center
+      align-items: center
+      transition: all 1s
     & .todo-datepicker
       color: #000000 !important
     &-header
+
+  .modal-fade-enter, .modal-fade-leave-to
+    opacity: 0
+  .modal-fade-active, .modal-fade-leave-active
+    transition: opacity .3s
 </style>
