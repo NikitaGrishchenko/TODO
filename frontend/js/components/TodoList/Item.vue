@@ -1,53 +1,51 @@
 <template>
-  <div class="todo-item d-flex justify-content-between align-items-center">
-    <div class="todo-right">
-      <div class="d-flex align-items-center">
-        <input
-          type="checkbox"
-          v-model="value"
-          class="todo-item__checkbox"
-          @change="check"
-        />
-        <div
-          v-if="!item.editing"
-          :class="{ 'todo-item__title': true, completed: item.completed }"
-          :style="{
-            'border-bottom': '1px solid' + ' ' + item.priority_color
-          }"
-        >
-          {{ item.title }}
-        </div>
-        <div class="d-flex" v-else>
+  <div>
+    <edit-popup
+      :item="item"
+      v-if="isPopupChangeVisible"
+      @closePopup="closePopup"
+      @doneEdit="doneEdit"
+      :ru="ru"
+      :format="format"
+    />
+    <div class="todo-item d-flex justify-content-between align-items-center">
+      <div class="todo-right">
+        <div class="d-flex align-items-center">
           <input
-            class="todo-item__edit"
-            type="text"
-            v-model="item.title"
-            @keyup.esc="cancelEdit"
+            type="checkbox"
+            v-model="value"
+            class="todo-item__checkbox"
+            @change="check"
           />
-          <button @click="doneEdit">
-            Ок
-          </button>
+          <div
+            :class="{ 'todo-item__title': true, completed: item.completed }"
+            :style="{
+              'border-bottom': '1px solid' + ' ' + item.priority_color
+            }"
+          >
+            {{ item.title }}
+          </div>
+        </div>
+        <div class="todo-item__date">
+          {{ format_date }}
         </div>
       </div>
-      <div class="todo-item__date">
-        {{ format_date }}
-      </div>
-    </div>
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="todo-item__change" @click="beginEdit">
-        <img
-          src="static/img/pencil.png"
-          alt="pencil"
-          class="todo-item__pencil"
-        />
-      </div>
-      <div>
-        <div class="todo-item__remove" @click="remove">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="todo-item__change" @click="showPopupChange">
           <img
-            src="static/img/times.png"
-            alt="times"
-            class="todo-item__times"
+            src="static/img/pencil.png"
+            alt="pencil"
+            class="todo-item__pencil"
           />
+        </div>
+        <div>
+          <div class="todo-item__remove" @click="remove">
+            <img
+              src="static/img/times.png"
+              alt="times"
+              class="todo-item__times"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -56,15 +54,22 @@
 
 <script>
   import moment from 'moment'
+  import editPopup from '../Popup/index'
 
   export default {
     props: {
-      item: Object
+      item: Object,
+      ru: Object,
+      format: String
     },
     data() {
       return {
-        value: Boolean
+        value: Boolean,
+        isPopupChangeVisible: false
       }
+    },
+    components: {
+      editPopup
     },
     mounted() {
       this.value = this.item.completed
@@ -76,6 +81,12 @@
       }
     },
     methods: {
+      showPopupChange() {
+        this.isPopupChangeVisible = true
+      },
+      closePopup() {
+        this.isPopupChangeVisible = false
+      },
       check() {
         this.$emit('check', {
           item: this.item,

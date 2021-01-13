@@ -54,6 +54,8 @@
           v-for="item in todosFiltered"
           :key="item.id"
           :item="item"
+          :ru="ru"
+          :format="format"
           @beginEdit="beginEditItem"
           @finishEdit="finishEditItem"
           @remove="removeItem"
@@ -156,8 +158,9 @@
       updateTodoItem(item) {
         const saveDate = {
           ...item,
-          date: moment(item.date, 'D-M-YYYY').format('YYYY-MM-DD')
+          date: moment(item.date, 'DD-MM-YYYY').format('DD-MM-YYYY')
         }
+        console.log(saveDate.date)
         axios
           .patch(`todo/${item.id}/`, saveDate)
           .then(() => {
