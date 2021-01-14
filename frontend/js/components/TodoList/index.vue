@@ -210,7 +210,6 @@
             priority: this.selectedUserPriority,
             date: moment(this.inputDatePicker).format('YYYY-MM-DD')
           }
-          console.log(result)
           this.newTodo = ''
           axios
             .post('todo/', result)

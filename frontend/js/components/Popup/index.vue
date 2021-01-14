@@ -1,6 +1,6 @@
 <template>
   <transition name="modal-fade" appear>
-    <div @dblclick.self="closePopup" class="popup-wrapper">
+    <div @click.self="closePopup" class="popup-wrapper">
       <div class="popup">
         <div class="popup-header d-flex justify-content-end">
           <div class="popup-header__close" @click="closePopup">
@@ -21,6 +21,7 @@
             :monday-first="true"
             :format="format"
             @closed="doneEdit(item)"
+            @focus="focusInputDate(item)"
           ></datepicker>
         </div>
       </div>
@@ -47,7 +48,8 @@
     },
     date() {
       return {
-        initialItemTitle: ''
+        initialItemTitle: '',
+        initialItemDate: ''
       }
     },
     methods: {
@@ -55,6 +57,9 @@
         this.$emit('closePopup')
       },
       doneEdit(item) {
+        if (item.date != this.initialItemDate) {
+          this.$emit('doneEdit')
+        }
         if (item.title === '') {
           this.item.title = this.initialItemTitle
           return Swal.fire({
@@ -72,8 +77,11 @@
           this.$emit('doneEdit')
         }
       },
-      focusInputTitle(title) {
-        this.initialItemTitle = title
+      focusInputTitle(item) {
+        this.initialItemTitle = item.title
+      },
+      focusInputDate(item) {
+        this.initialItemDate = item.date
       }
     }
   }
@@ -108,7 +116,7 @@
 
   .modal-fade-enter, .modal-fade-leave-to
     opacity: 0
-    transition: .3s
+    transition: .1s
   .modal-fade-active, .modal-fade-leave-active
-    transition: opacity .3s
+    transition: opacity .1s
 </style>
