@@ -1,6 +1,6 @@
 <template>
-  <transition name="modal-fade">
-    <div @click.self="closePopup" class="popup-wrapper">
+  <transition name="modal-fade" appear>
+    <div @dblclick.self="closePopup" class="popup-wrapper">
       <div class="popup">
         <div class="popup-header d-flex justify-content-end">
           <div class="popup-header__close" @click="closePopup">
@@ -8,14 +8,19 @@
           </div>
         </div>
         <div class="popup-main">
-          <input v-model="item.title" type="text" @blur="doneEdit" />
+          <input
+            v-model="item.title"
+            type="text"
+            @focus="focusInputTitle(item)"
+            @blur="doneEdit(item)"
+          />
           <datepicker
             input-class="todo-datepicker"
             v-model="item.date"
             :language="ru"
             :monday-first="true"
             :format="format"
-            @closed="doneEdit"
+            @closed="doneEdit(item)"
           ></datepicker>
         </div>
       </div>
@@ -26,6 +31,7 @@
 <script>
   import Datepicker from 'vuejs-datepicker'
   import moment from 'moment'
+  import Swal from 'sweetalert2'
   export default {
     components: { Datepicker },
     name: 'edit-popup',
@@ -40,23 +46,36 @@
       }
     },
     date() {
-      return {}
+      return {
+        initialItemTitle: ''
+      }
     },
     methods: {
       closePopup() {
         this.$emit('closePopup')
       },
-      doneEdit() {
-        this.$emit('doneEdit')
+      doneEdit(item) {
+        if (item.title === '') {
+          this.item.title = this.initialItemTitle
+          return Swal.fire({
+            position: 'center',
+            showConfirmButton: false,
+            icon: 'warning',
+            title: 'Введите текст',
+            timer: 1000,
+            timerProgressBar: true
+          })
+        }
+        if (this.initialItemTitle == item.title) {
+          return
+        } else {
+          this.$emit('doneEdit')
+        }
+      },
+      focusInputTitle(title) {
+        this.initialItemTitle = title
       }
     }
-    // directives: {
-    //   focus: {
-    //     inserted: function(el) {
-    //       el.focus()
-    //     }
-    //   }
-    // }
   }
 </script>
 
@@ -79,13 +98,17 @@
       display: flex
       justify-content: center
       align-items: center
-      transition: all 1s
+      transition: all 0.2s
     & .todo-datepicker
       color: #000000 !important
     &-header
+      &__close
+        z-index: 200000
+        cursor: pointer
 
   .modal-fade-enter, .modal-fade-leave-to
     opacity: 0
+    transition: .3s
   .modal-fade-active, .modal-fade-leave-active
     transition: opacity .3s
 </style>

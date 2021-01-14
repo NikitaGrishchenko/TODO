@@ -49,6 +49,7 @@
         class="todo-wrapper col-6 offset-3"
         tag="div"
         v-if="todosFiltered && todosFiltered.length > 0"
+        appear
       >
         <item
           v-for="item in todosFiltered"
@@ -156,16 +157,13 @@
         this.filter = id
       },
       updateTodoItem(item) {
-        console.log(item.date)
         const saveDate = {
           ...item,
           date: moment(item.date, 'MM-DD-YYYY').format('YYYY-MM-DD')
         }
         axios
           .patch(`todo/${item.id}/`, saveDate)
-          .then(() => {
-            console.log(saveDate.date)
-          })
+          .then(() => {})
           .catch(error => {
             console.log(error)
           })
