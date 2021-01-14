@@ -20,9 +20,12 @@
             :language="ru"
             :monday-first="true"
             :format="format"
-            @closed="doneEdit(item)"
+            @closed="doneEditDate(item)"
             @focus="focusInputDate(item)"
           ></datepicker>
+          <div @click="deleteItem" class="popup-main__del">
+            удалить
+          </div>
         </div>
       </div>
     </div>
@@ -56,10 +59,15 @@
       closePopup() {
         this.$emit('closePopup')
       },
-      doneEdit(item) {
+      deleteItem() {
+        this.$emit('deleteItem')
+      },
+      doneEditDate(item) {
         if (item.date != this.initialItemDate) {
           this.$emit('doneEdit')
         }
+      },
+      doneEdit(item) {
         if (item.title === '') {
           this.item.title = this.initialItemTitle
           return Swal.fire({

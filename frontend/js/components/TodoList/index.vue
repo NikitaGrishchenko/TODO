@@ -31,10 +31,10 @@
                 :format="format"
               ></datepicker>
               <select class="todo-select" v-model="selectedUserPriority">
-                <option class="todo-option__4" value="4">Обычный</option>
-                <option value="1">1 приоритет</option>
+                <option class="todo-option__4" value="1">Обычный</option>
+                <!-- <option value="1">1 приоритет</option>
                 <option value="2">2 приоритет</option>
-                <option value="3">3 приоритет</option>
+                <option value="3">3 приоритет</option> -->
               </select>
             </div>
             <div class="todo-input__btn" @click="addItem">Добавить</div>
@@ -135,7 +135,7 @@
         filter: 'active',
         inputDatePicker: moment().format(),
         format: 'd MMM',
-        selectedUserPriority: '4'
+        selectedUserPriority: '1'
       }
     },
     computed: {
@@ -178,12 +178,7 @@
         this.todos.splice(index, 1)
         axios.delete(`todo/${item.id}/`).then(() => {})
       },
-      beginEditItem(item) {
-        item.editing = true
-      },
       finishEditItem({ item, complite }) {
-        item.editing = false
-
         if (!complite) {
           //
           return
@@ -205,7 +200,6 @@
           const result = {
             title: this.newTodo,
             completed: false,
-            editing: false,
             user: this.userId,
             priority: this.selectedUserPriority,
             date: moment(this.inputDatePicker).format('YYYY-MM-DD')

@@ -5,6 +5,7 @@
       v-if="isPopupChangeVisible"
       @closePopup="closePopup"
       @doneEdit="doneEdit"
+      @deleteItem="remove"
       :ru="ru"
       :format="format"
     />
@@ -41,7 +42,7 @@
             class="todo-item__pencil"
           />
         </div> -->
-        <div>
+        <!-- <div>
           <div class="todo-item__remove" @click="remove">
             <img
               src="static/img/times.png"
@@ -49,7 +50,7 @@
               class="todo-item__times"
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -102,11 +103,16 @@
         this.$emit('beginEdit', this.item)
       },
       remove() {
-        if (this.item.editing) {
-          this.cancelEdit()
-          return
-        }
         this.$emit('remove', this.item)
+        return Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          icon: 'success',
+          title: 'Задача удалена',
+          timer: 1500,
+          timerProgressBar: true
+        })
       },
       doneEdit() {
         this.$emit('finishEdit', {
