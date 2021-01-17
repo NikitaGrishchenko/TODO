@@ -5,6 +5,7 @@
       border-bottom: 0.5px solid #fff
       padding: 10px 0
       margin-bottom: 10px
+      z-index: 300
     &__btn
       background: #0f121b
       color: #ffffff
@@ -18,6 +19,9 @@
   &-inside
     cursor: pointer
     padding: 20px 20px
+    &:hover
+      background: #111520
+      border-radius: 15px
   &-container
     transition: 0.1s
   &-item
@@ -28,10 +32,6 @@
     background: #0F121B
     border: none
     outline: none
-    &:hover .todo-item__remove
-      opacity: 1
-    &:hover .todo-item__change
-      opacity: 1
     &__title
       margin-left: 10px
       padding-right: 2px
@@ -65,6 +65,7 @@
     &__checkbox
       margin-right: 7px
       margin-top: -8.5px
+      z-index: 99
   &-box-btn
     display: flex
     justify-content: flex-end

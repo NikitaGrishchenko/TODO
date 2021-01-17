@@ -11,7 +11,7 @@
     />
     <div
       class="todo-inside d-flex justify-content-between align-items-center"
-      @click="showPopupChange"
+      @click.self="showPopupChange"
     >
       <div class="todo-right">
         <div class="d-flex align-items-center">
@@ -26,32 +26,16 @@
             :style="{
               'border-bottom': '1px solid' + ' ' + item.priority_color
             }"
+            @click.self="showPopupChange"
           >
             {{ item.title }}
           </div>
         </div>
-        <div class="todo-item__date">
+        <div class="todo-item__date" @click.self="showPopupChange">
           {{ format_date }}
         </div>
       </div>
-      <div class="todo-left">
-        <!-- <div class="todo-item__change">
-          <img
-            src="static/img/pencil.png"
-            alt="pencil"
-            class="todo-item__pencil"
-          />
-        </div> -->
-        <!-- <div>
-          <div class="todo-item__remove" @click="remove">
-            <img
-              src="static/img/times.png"
-              alt="times"
-              class="todo-item__times"
-            />
-          </div>
-        </div> -->
-      </div>
+      <div class="todo-left"></div>
     </div>
   </div>
   <!-- </div> -->
