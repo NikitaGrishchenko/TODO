@@ -3,16 +3,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation</title>
+    <title>Подтверждение E-mail</title>
     <style>
-        body{ color: blue; }
+        body{ color: #fff; background: #0f121b; }
     </style>
 </head>
 <body>
     {% if success %}
-        You have confirmed your account!
+        Вы успешно подтвердили свой E-mail!
+        <div class=""><a href="/">Авторизоваться</a></div>
     {% else %}
-        Error, invalid token!
+        Ошибка, время подтверждения истекло
+        <div class=""><a href="/">На главную</a></div>
     {% endif %}
 </body>
 </html>

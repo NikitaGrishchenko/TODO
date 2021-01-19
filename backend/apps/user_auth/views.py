@@ -22,7 +22,8 @@ class SignUpView(generic.CreateView):
         user.save()
         sendConfirm(user)
         messages.success(
-            self.request, "Для завершения регистрации подтвердите свою почту!!!!!!"
+            self.request,
+            f"Для завершения регистрации, перейдите по ссылке, указанной в письме, отправленное на {user.email}",
         )
         return super().form_valid(form)
 
