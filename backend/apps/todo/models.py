@@ -30,7 +30,6 @@ class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, blank=True)
-    editing = models.BooleanField(default=False)
     priority = models.ForeignKey(
         Priority, on_delete=models.CASCADE, related_name="priority"
     )

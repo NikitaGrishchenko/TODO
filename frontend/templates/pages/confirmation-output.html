@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load  static  %}
+
+
+{% block content%}
+  {% if not user.is_authenticated %}
+    <div class="container">
+      <div class="row">
+        <div class="col-3 m-5 p-5 mx-auto text-center text-white">
+          <h1>Ошибка</h1>
+          <p>Вы не авторизированы</p>
+          <a class="btn btn-primary my-3" href="/">Назад</a>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <section class="exit">
+      <div class="container">
+        <div class="row">
+          <div class="col-4 mx-auto">
+            <div class="exit-box text-center">
+              <p class="exit-box__title">
+                Вы уверены, что хотите выйти?
+              </p>
+              <div class="exit-box__btns d-flex align-items-center">
+                <a class="exit-btn" href="/auth/logout/">
+                  Выйти
+                </a>
+                <a class="exit-btn" href="/">
+                  Вернуться назад
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock content %}

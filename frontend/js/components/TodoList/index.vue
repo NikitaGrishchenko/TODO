@@ -31,10 +31,10 @@
                 :format="format"
               ></datepicker>
               <select class="todo-select" v-model="selectedUserPriority">
-                <option class="todo-option__4" value="4">Обычный</option>
-                <option value="1">1 приоритет</option>
+                <option class="todo-option__4" value="1">Обычный</option>
+                <!-- <option value="1">1 приоритет</option>
                 <option value="2">2 приоритет</option>
-                <option value="3">3 приоритет</option>
+                <option value="3">3 приоритет</option> -->
               </select>
             </div>
             <div class="todo-input__btn" @click="addItem">Добавить</div>
@@ -49,11 +49,14 @@
         class="todo-wrapper col-6 offset-3"
         tag="div"
         v-if="todosFiltered && todosFiltered.length > 0"
+        appear
       >
         <item
           v-for="item in todosFiltered"
           :key="item.id"
           :item="item"
+          :ru="ru"
+          :format="format"
           @beginEdit="beginEditItem"
           @finishEdit="finishEditItem"
           @remove="removeItem"
@@ -132,7 +135,7 @@
         filter: 'active',
         inputDatePicker: moment().format(),
         format: 'd MMM',
-        selectedUserPriority: '4'
+        selectedUserPriority: '1'
       }
     },
     computed: {
@@ -156,13 +159,11 @@
       updateTodoItem(item) {
         const saveDate = {
           ...item,
-          date: moment(item.date, 'D-M-YYYY').format('YYYY-MM-DD')
+          date: moment(item.date, 'MM-DD-YYYY').format('YYYY-MM-DD')
         }
         axios
           .patch(`todo/${item.id}/`, saveDate)
-          .then(() => {
-            item.editing = false
-          })
+          .then(() => {})
           .catch(error => {
             console.log(error)
           })
@@ -177,12 +178,7 @@
         this.todos.splice(index, 1)
         axios.delete(`todo/${item.id}/`).then(() => {})
       },
-      beginEditItem(item) {
-        item.editing = true
-      },
       finishEditItem({ item, complite }) {
-        item.editing = false
-
         if (!complite) {
           //
           return
@@ -204,12 +200,10 @@
           const result = {
             title: this.newTodo,
             completed: false,
-            editing: false,
             user: this.userId,
             priority: this.selectedUserPriority,
             date: moment(this.inputDatePicker).format('YYYY-MM-DD')
           }
-          console.log(result)
           this.newTodo = ''
           axios
             .post('todo/', result)

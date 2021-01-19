@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "apps.todo",
     "apps.user_auth",
     "widget_tweaks",
+    "django_email_verification",
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -166,3 +167,18 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ),
 }
+
+# django-email-verification
+
+EMAIL_ACTIVE_FIELD = "is_active"
+EMAIL_SERVER = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_ADDRESS = "nikitagrishchenko61@gmail.com"
+EMAIL_FROM_ADDRESS = "nikitagrishchenko61@gmail.com"
+EMAIL_PASSWORD = "SYJLugXon3pt"
+EMAIL_MAIL_SUBJECT = "Confirm your email"
+EMAIL_MAIL_HTML = "mail/mail_body.html"
+# EMAIL_MAIL_PLAIN = 'mail_body.txt'
+EMAIL_TOKEN_LIFE = 60 * 60
+EMAIL_PAGE_TEMPLATE = "mail/confirm_template.html"
+EMAIL_PAGE_DOMAIN = "http://localhost:8000/"

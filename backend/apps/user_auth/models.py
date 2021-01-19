@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         validators=[FileExtensionValidator(allowed_extensions=["jpeg", "jpg", "png"])],
     )
-    is_active = models.BooleanField(_("active"), default=True)
+    is_active = models.BooleanField(_("active"), default=False)
     date_joined = models.DateTimeField(
         verbose_name=("Дата создания"), default=timezone.now
     )
