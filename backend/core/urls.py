@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from django_email_verification import urls as mail_urls
 
 from .views import HomeView
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path("api/v1/todo/", include("apps.todo.v1.urls")),
     path("auth/", include("django.contrib.auth.urls")),
     path("auth/", include("apps.user_auth.urls")),
+    path("email/", include(mail_urls)),
     path(
         "",
         HomeView.as_view(template_name="index.html"),

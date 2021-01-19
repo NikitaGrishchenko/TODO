@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
+from django_email_verification import sendConfirm
 
 from .forms import CreationUserForm
 
@@ -19,7 +20,10 @@ class SignUpView(generic.CreateView):
         user = form.save(commit=False)
         user.username = user.email
         user.save()
-        messages.success(self.request, "Вы успешно зарегистрированы")
+        sendConfirm(user)
+        messages.success(
+            self.request, "Для завершения регистрации подтвердите свою почту!!!!!!"
+        )
         return super().form_valid(form)
 
 
