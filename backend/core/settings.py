@@ -25,6 +25,12 @@ DIST_DIR = os.path.join(STATIC_DIR, "dist")
 WEBPACK_STATS_FILE = os.path.join(DIST_DIR, "webpack-stats.json")
 PUBLIC_MEDIA_DIR = os.path.join(STATIC_DIR, "media")
 
+# Nginx
+PUBLIC_DIR = os.path.join(PROJECT_DIR, "public")
+PRIVATE_DIR = os.path.join(PROJECT_DIR, "private")
+PUBLIC_MEDIA_DIR = os.path.join(PUBLIC_DIR, "media")
+PUBLIC_STATIC_DIR = os.path.join(PUBLIC_DIR, "static")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -90,8 +96,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "djangotest",
+        "USER": "djangotestuser",
+        "PASSWORD": "dodere20",
+        "HOST": "localhost",
+        "PORT": "",
     }
 }
 
@@ -144,6 +154,7 @@ WEBPACK_LOADER = {
 
 STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
 STATIC_URL = "/static/"
+STATIC_ROOT = PUBLIC_STATIC_DIR
 
 MEDIA_ROOT = PUBLIC_MEDIA_DIR
 MEDIA_URL = "/media/"
@@ -173,12 +184,12 @@ REST_FRAMEWORK = {
 EMAIL_ACTIVE_FIELD = "is_active"
 EMAIL_SERVER = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_ADDRESS = "nikitagrishchenko61@gmail.com"
-EMAIL_FROM_ADDRESS = "nikitagrishchenko61@gmail.com"
-EMAIL_PASSWORD = "SYJLugXon3pt"
-EMAIL_MAIL_SUBJECT = "Confirm your email"
+EMAIL_ADDRESS = "todoapp87@gmail.com"
+EMAIL_FROM_ADDRESS = "todoapp87@gmail.com"
+EMAIL_PASSWORD = "7dMaNf8dVwHN"
+EMAIL_MAIL_SUBJECT = "Подтвердите свою электронную почту"
 EMAIL_MAIL_HTML = "mail/mail_body.html"
 # EMAIL_MAIL_PLAIN = 'mail_body.txt'
-EMAIL_TOKEN_LIFE = 60 * 60
+EMAIL_TOKEN_LIFE = 60 * 60 * 48
 EMAIL_PAGE_TEMPLATE = "mail/confirm_template.html"
 EMAIL_PAGE_DOMAIN = "http://localhost:8000/"
