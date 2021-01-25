@@ -54,10 +54,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "webpack_loader",
     "rest_framework",
-    "apps.todo",
-    "apps.user_auth",
     "widget_tweaks",
     "django_email_verification",
+    "apps.todo",
+    "apps.user_auth",
 ]
 
 MIDDLEWARE = [
