@@ -25,6 +25,12 @@ DIST_DIR = os.path.join(STATIC_DIR, "dist")
 WEBPACK_STATS_FILE = os.path.join(DIST_DIR, "webpack-stats.json")
 PUBLIC_MEDIA_DIR = os.path.join(STATIC_DIR, "media")
 
+# Nginx
+PUBLIC_DIR = os.path.join(PROJECT_DIR, "public")
+PRIVATE_DIR = os.path.join(PROJECT_DIR, "private")
+PUBLIC_MEDIA_DIR = os.path.join(PUBLIC_DIR, "media")
+PUBLIC_STATIC_DIR = os.path.join(PUBLIC_DIR, "static")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -90,8 +96,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "djangotest",
+        "USER": "djangotestuser",
+        "PASSWORD": "dodere20",
+        "HOST": "localhost",
+        "PORT": "",
     }
 }
 
@@ -144,6 +154,7 @@ WEBPACK_LOADER = {
 
 STATICFILES_DIRS = [STATIC_DIR, DIST_DIR]
 STATIC_URL = "/static/"
+STATIC_ROOT = PUBLIC_STATIC_DIR
 
 MEDIA_ROOT = PUBLIC_MEDIA_DIR
 MEDIA_URL = "/media/"
