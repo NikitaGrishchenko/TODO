@@ -188,4 +188,4 @@ EMAIL_MAIL_HTML = "mail/mail_body.html"
 # EMAIL_MAIL_PLAIN = 'mail_body.txt'
 EMAIL_TOKEN_LIFE = 60 * 60 * 48
 EMAIL_PAGE_TEMPLATE = "mail/confirm_template.html"
-EMAIL_PAGE_DOMAIN = "http://localhost:8000/"
+EMAIL_PAGE_DOMAIN = "http://176.99.11.39/"
