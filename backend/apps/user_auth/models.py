@@ -1,11 +1,11 @@
 from django.contrib.auth.base_user import AbstractBaseUser
-
-# from .managers import UserManager
-from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         validators=[FileExtensionValidator(allowed_extensions=["jpeg", "jpg", "png"])],
     )
-    is_active = models.BooleanField(_("active"), default=False)
+    is_active = models.BooleanField(_("active"), default=True)
     date_joined = models.DateTimeField(
         verbose_name=("Дата создания"), default=timezone.now
     )
