@@ -106,7 +106,7 @@ typed-ast==1.4.1
 typing-extensions==3.7.4.3
 Unidecode==1.1.1
 uritemplate==3.0.1
-urllib3==1.25.8
+urllib3==1.26.5
 virtualenv==20.0.21
 virtualenv-clone==0.5.4
 virtualenvwrapper-win==1.2.6
