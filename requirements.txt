@@ -23,7 +23,7 @@ dataclasses==0.6
 defusedxml==0.6.0
 diff-match-patch==20181111
 distlib==0.3.0
-Django==3.1.2
+Django==3.1.12
 django-cors-headers==3.5.0
 django-email-verification==0.0.2
 django-import-export==2.2.0
