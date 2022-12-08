@@ -8,7 +8,7 @@ CacheControl==0.12.6
 cachy==0.3.0
 cairocffi==1.1.0
 CairoSVG==2.5.1
-certifi==2019.11.28
+certifi==2022.12.7
 cffi==1.14.1
 chardet==3.0.4
 cleo==0.7.6
